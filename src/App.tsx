@@ -3,6 +3,9 @@ import './App.css';
 import {TaskType, TodoList} from './TodoList';
 import {useState} from 'react';
 
+
+type filterType = 'all' | 'complete' | 'active'
+
 function App() {
 
     const todoListTitle: string = 'What to learn today';
@@ -15,10 +18,20 @@ function App() {
     ]);
 
     const removeTask = (taskID: number) => {
-        setTasks(tasks.filter(t => t.id !== taskID)) //10ms
-       // console.log(tasks) // работает асинхронно
+        setTasks(tasks.filter(t => t.id !== taskID)) //5 - 10ms
+        // console.log(tasks) // работает асинхронно
     }
 
+    const [filter, setFilter] = useState<filterType>('all')
+    let tasksFilteredTodoList = tasks
+
+    if(filter === 'active'){
+        tasksFilteredTodoList = tasks.filter(filtered => !filtered.isDone)
+
+    }
+    if(filter === 'complete'){
+        tasksFilteredTodoList = tasks.filter(filtered => filtered.isDone)
+    }
 
     return (
         <div className="App">
