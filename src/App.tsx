@@ -4,7 +4,7 @@ import {TaskType, TodoList} from './TodoList';
 import {useState} from 'react';
 
 
-type filterType = 'all' | 'completed' | 'active'
+export type filterType = 'all' | 'completed' | 'active'
 
 function App() {
 
@@ -16,21 +16,22 @@ function App() {
         {id: 3, title: 'REACT', isDone: false},
         {id: 4, title: 'ReactNative', isDone: false},
     ]);
-    let tasksFilteredTodoList = tasks
 
     const removeTask = (taskID: number) => {
         setTasks(tasks.filter(t => t.id !== taskID)) //5 - 10ms
         // console.log(tasks) // работает асинхронно
     }
 
+    const changeFilter = (name: filterType) => {
+        setFilter(name)
+    }
     const [filter, setFilter] = useState<filterType>('all')
 
-
-    if(filter === 'active'){
+    let tasksFilteredTodoList = tasks
+    if (filter === 'active') {
         tasksFilteredTodoList = tasks.filter(filtered => !filtered.isDone)
-
     }
-    if(filter === 'completed'){
+    if (filter === 'completed') {
         tasksFilteredTodoList = tasks.filter(filtered => filtered.isDone)
     }
 
@@ -38,7 +39,9 @@ function App() {
         <div className="App">
             <TodoList title={todoListTitle}
                       tasks={tasksFilteredTodoList}
-                      removeTask={removeTask}/>
+                      removeTask={removeTask}
+                      changeFilter={changeFilter}
+            />
         </div>
     );
 }
