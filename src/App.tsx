@@ -2,22 +2,23 @@ import React from 'react';
 import './App.css';
 import {TaskType, TodoList} from './TodoList';
 import {useState} from 'react';
+import {v1} from 'uuid';
 
 
 export type filterType = 'all' | 'completed' | 'active'
 
 function App() {
-
+    console.log(v1())
     const todoListTitle: string = 'What to learn today';
 
     const [tasks, setTasks] = useState<Array<TaskType>>([
-        {id: 1, title: 'HTML&CSS', isDone: true},
-        {id: 2, title: 'JS&TS', isDone: true},
-        {id: 3, title: 'REACT', isDone: false},
-        {id: 4, title: 'ReactNative', isDone: false},
+        {id: v1(), title: 'HTML&CSS', isDone: true},
+        {id: v1(), title: 'JS&TS', isDone: true},
+        {id: v1(), title: 'REACT', isDone: false},
+        {id: v1(), title: 'ReactNative', isDone: false},
     ]);
 
-    const removeTask = (taskID: number) => {
+    const removeTask = (taskID: string) => {
         setTasks(tasks.filter(t => t.id !== taskID)) //5 - 10ms
         // console.log(tasks) // работает асинхронно
     }
@@ -27,6 +28,7 @@ function App() {
     }
     const [filter, setFilter] = useState<filterType>('all')
 
+// ui
     let tasksFilteredTodoList = tasks
     if (filter === 'active') {
         tasksFilteredTodoList = tasks.filter(filtered => !filtered.isDone)
