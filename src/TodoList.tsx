@@ -12,7 +12,7 @@ type TodoListPropsType = {
     tasks: Array<TaskType>
     removeTask: (taskID: string) => void
     changeFilter: (name: filterType) => void
-    addTask: (value : string) => void
+    addTask: (value: string) => void
 }
 
 export const TodoList = (props: TodoListPropsType) => {
@@ -22,10 +22,7 @@ export const TodoList = (props: TodoListPropsType) => {
         setValue(e.currentTarget.value)
     }
 
-
-
-
-    const taskItems = props.tasks.map(t => {
+    const taskItems = props.tasks.length ? props.tasks.map(t => {
         return (
             <li key={t.id}>
                 <input type="checkbox" checked={t.isDone}/>
@@ -34,6 +31,7 @@ export const TodoList = (props: TodoListPropsType) => {
             </li>
         );
     })
+        : <span>Tasks list is empty</span>
 
 
     return (
