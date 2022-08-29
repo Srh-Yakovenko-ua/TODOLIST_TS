@@ -18,8 +18,13 @@ type TodoListPropsType = {
 export const TodoList = (props: TodoListPropsType) => {
 
     const [value, setValue] = useState<string>('')
+
     const changeTitle = (e: { currentTarget: { value: string; }; }) => {
         setValue(e.currentTarget.value)
+    }
+    const addTask = () => {
+        props.addTask(value)
+        setValue('')
     }
 
     const taskItems = props.tasks.length ? props.tasks.map(t => {
@@ -30,8 +35,7 @@ export const TodoList = (props: TodoListPropsType) => {
                 <button onClick={() => props.removeTask(t.id)}>x</button>
             </li>
         );
-    })
-        : <span>Tasks list is empty</span>
+    }) : <span>Tasks list is empty</span>
 
 
     return (
@@ -39,7 +43,7 @@ export const TodoList = (props: TodoListPropsType) => {
             <h3>{props.title}</h3>
             <div>
                 <input value={value} onChange={changeTitle}/>
-                <button onClick={() => props.addTask(value)}>+</button>
+                <button onClick={addTask}>+</button>
             </div>
             <ul>
                 {taskItems}
