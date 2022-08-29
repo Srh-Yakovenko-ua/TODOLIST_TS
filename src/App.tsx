@@ -8,7 +8,7 @@ import {v1} from 'uuid';
 export type filterType = 'all' | 'completed' | 'active'
 
 function App() {
-    console.log(v1())
+
     const todoListTitle: string = 'What to learn today';
 
     const [tasks, setTasks] = useState<Array<TaskType>>([
@@ -22,6 +22,15 @@ function App() {
         setTasks(tasks.filter(t => t.id !== taskID)) //5 - 10ms
         // console.log(tasks) // работает асинхронно
     }
+
+    const addTask = (value: string) => {
+        const newTask: TaskType = {
+            id: v1(), title: value, isDone: false,
+        };
+        const copyTasks = [newTask, ...tasks]
+        setTasks(copyTasks)
+    }
+
 
     const changeFilter = (name: filterType) => {
         setFilter(name)
@@ -43,6 +52,7 @@ function App() {
                       tasks={tasksFilteredTodoList}
                       removeTask={removeTask}
                       changeFilter={changeFilter}
+                      addTask={addTask}
             />
         </div>
     );
