@@ -27,16 +27,20 @@ export const TodoList = (props: TodoListPropsType) => {
         setValue('')
     }
 
-    const taskItems = props.tasks.length ? props.tasks.map(t => {
-        return (
-            <li key={t.id}>
-                <input type="checkbox" checked={t.isDone}/>
-                <span>{t.title}</span>
-                <button onClick={() => props.removeTask(t.id)}>x</button>
-            </li>
-        );
-    }) : <span>Tasks list is empty</span>
+    const taskItems = props.tasks.length ?
+        props.tasks.map(t => {
+            return (
+                <li key={t.id}>
+                    <input type="checkbox" checked={t.isDone}/>
+                    <span>{t.title}</span>
+                    <button onClick={() => props.removeTask(t.id)}>x</button>
+                </li>
+            );
+        }) : <span>Tasks list is empty</span>
 
+    const all = () => props.changeFilter('all')
+    const active = () => props.changeFilter('active')
+    const complete = () => props.changeFilter('completed')
 
     return (
         <div>
@@ -49,9 +53,9 @@ export const TodoList = (props: TodoListPropsType) => {
                 {taskItems}
             </ul>
             <div>
-                <button onClick={() => props.changeFilter('all')}>All</button>
-                <button onClick={() => props.changeFilter('active')}>Active</button>
-                <button onClick={() => props.changeFilter('completed')}>Completed</button>
+                <button onClick={all}>All</button>
+                <button onClick={active}>Active</button>
+                <button onClick={complete}>Completed</button>
             </div>
         </div>
     );
