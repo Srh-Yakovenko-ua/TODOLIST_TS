@@ -9,6 +9,7 @@ type TodoListType = {
     setFilteredTask: (arg: filteredTaskType) => void
     addTask: (newTaskTitle: string) => void
     changeCheckBoxStatus: (id: string, newIsDone: boolean) => void
+    filter: filteredTaskType
 
 }
 export type filteredTaskType = 'all' | 'completed' | 'active'
@@ -42,7 +43,6 @@ export const TodoList = (props: TodoListType) => {
         } else {
             setError('Title is required')
         }
-
     }
 
     const onTitleChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -61,14 +61,15 @@ export const TodoList = (props: TodoListType) => {
                        onKeyUp={onKeyUpHandler}/>
                 <button onClick={buttonClickAdd}>+</button>
             </div>
-            <div className={'error-message'}>{error}</div>
+            {<div className={'error-message'}>{error}</div>}
             <ul>
                 {mapTask}
             </ul>
             <div>
-                <button onClick={all}>All</button>
-                <button onClick={completed}>Complete</button>
-                <button onClick={active}>Active</button>
+                <button className={props.filter === 'all' ? 'active-filter' : ''} onClick={all}>All</button>
+                <button className={props.filter === 'completed' ? 'active-filter' : ''} onClick={completed}>Complete
+                </button>
+                <button className={props.filter === 'active' ? 'active-filter' : ''} onClick={active}>Active</button>
             </div>
         </div>
 
