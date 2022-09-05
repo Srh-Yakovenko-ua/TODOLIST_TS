@@ -32,14 +32,20 @@ function App() {
         else return tasks
     }
 
-
-
-    const addTask = (newTaskTitle :string) => {
+    const addTask = (newTaskTitle: string) => {
         let newTask = {id: v1(), title: newTaskTitle, isDone: false}
         let newTasks = [newTask, ...tasks]
         setTasks(newTasks)
     }
 
+    const changeCheckBoxStatus = (taskID: string, newIsDone: boolean) => {
+        // let currentTask = tasks.find(t => t.id === taskID)
+        // if (currentTask) {
+        //     currentTask.isDone = newIsDone
+        //     setTasks([...tasks])
+        // }
+        setTasks(tasks.map(el => el.id === taskID ? {...el, isDone: newIsDone} : el))
+    }
     const filteredTasks = filteredTask(tasks, filtered)
 
     return (
@@ -48,7 +54,8 @@ function App() {
             <TodoList tasks={filteredTasks}
                       deleteTasks={deleteTask}
                       setFilteredTask={setFilteredTask}
-                      addTask={addTask}/>
+                      addTask={addTask}
+                      changeCheckBoxStatus={changeCheckBoxStatus}/>
 
         </div>
     );
