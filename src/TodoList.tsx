@@ -1,6 +1,7 @@
 import React, {ChangeEvent, useState} from 'react';
 import {TaskType} from './App';
 import {KeyboardEvent} from 'react';
+import './App.css';
 
 type TodoListType = {
     tasks: Array<TaskType>
@@ -14,7 +15,7 @@ export type filteredTaskType = 'all' | 'completed' | 'active'
 
 export const TodoList = (props: TodoListType) => {
     const [newTaskTitle, setNewTaskTitle] = useState('')
-    const [error, setError] = useState(false)
+    const [error, setError] = useState('')
 
     const mapTask = props.tasks.map(t => {
         const onDeleteTaskHandler = () => props.deleteTasks(t.id)
@@ -35,17 +36,17 @@ export const TodoList = (props: TodoListType) => {
     const active = () => props.setFilteredTask('active')
 
     const buttonClickAdd = () => {
-        if(newTaskTitle.trim() !== ''){
+        if (newTaskTitle.trim() !== '') {
             props.addTask(newTaskTitle.trim())
             setNewTaskTitle('')
-        }else{
-            setError(true)
+        } else {
+            setError('Title is required')
         }
 
     }
 
     const onTitleChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setError(false)
+        setError('')
         setNewTaskTitle(e.currentTarget.value)
     }
     const onKeyUpHandler = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -53,7 +54,6 @@ export const TodoList = (props: TodoListType) => {
     }
 
     return (
-
         <div>
             <div>
                 <input className={error ? 'error' : ''} value={newTaskTitle}
@@ -61,6 +61,7 @@ export const TodoList = (props: TodoListType) => {
                        onKeyUp={onKeyUpHandler}/>
                 <button onClick={buttonClickAdd}>+</button>
             </div>
+            <div className={'error-message'}>{error}</div>
             <ul>
                 {mapTask}
             </ul>
