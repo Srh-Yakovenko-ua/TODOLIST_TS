@@ -10,22 +10,28 @@ type TodoListType = {
     addTask: (newTaskTitle: string) => void
     changeCheckBoxStatus: (id: string, newIsDone: boolean) => void
     filter: filteredTaskType
-
 }
+
 export type filteredTaskType = 'all' | 'completed' | 'active'
 
 export const TodoList = (props: TodoListType) => {
     const [newTaskTitle, setNewTaskTitle] = useState('')
     const [error, setError] = useState('')
 
+    const changeCheckBoxStatusHandler = (taskID: string, currentTarget: boolean) => {
+        props.changeCheckBoxStatus(taskID, currentTarget)
+    }
+
     const mapTask = props.tasks.map(t => {
         const onDeleteTaskHandler = () => props.deleteTasks(t.id)
-        const changeCheckBoxStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
-            props.changeCheckBoxStatus(t.id, e.currentTarget.checked)
-        }
+
+        // const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        //     changeCheckBoxStatusHandler(t.id, e.currentTarget.checked)
+        // }
+
         return (
-            <li key={t.id}>
-                <input type="checkbox" checked={t.isDone} onChange={changeCheckBoxStatusHandler}/>
+            <li key={t.id} className={t.isDone ? 'is-done' : ''}>
+                <input type="checkbox" checked={t.isDone} onChange={(e)=>{changeCheckBoxStatusHandler(t.id,e.currentTarget.checked)}}/>
                 <span>{t.title}</span>
                 <button onClick={onDeleteTaskHandler}>-</button>
             </li>
@@ -61,7 +67,7 @@ export const TodoList = (props: TodoListType) => {
                        onKeyUp={onKeyUpHandler}/>
                 <button onClick={buttonClickAdd}>+</button>
             </div>
-            {<div className={'error-message'}>{error}</div>}
+            {error && <div className={'error-message'}>{error}</div>}
             <ul>
                 {mapTask}
             </ul>
