@@ -19,6 +19,7 @@ function App() {
         {id: v1(), title: 'REACT', isDone: false},
         {id: v1(), title: 'ReactNative', isDone: false},
     ]);
+    console.log(tasks)
 
     const deleteTask = (taskId: string) => {
         setTasks(tasks.filter(t => t.id !== taskId))
@@ -55,7 +56,8 @@ function App() {
                       deleteTasks={deleteTask}
                       setFilteredTask={setFilteredTask}
                       addTask={addTask}
-                      changeCheckBoxStatus={changeCheckBoxStatus}/>
+                      changeCheckBoxStatus={changeCheckBoxStatus}
+                      filter={filtered}/>
 
         </div>
     );
