@@ -13,7 +13,7 @@ type TodolistsType = {
 function App() {
 
     let [todolists, setTodolists] = useState<Array<TodolistsType>>([
-        {id: v1(), title: 'What to learn', filter: 'all'},
+        {id: v1(), title: 'What to learn', filter: 'active'},
         {id: v1(), title: 'What to buy', filter: 'all'},
     ])
 
@@ -25,7 +25,8 @@ function App() {
         {id: v1(), title: 'Rest API', isDone: false},
         {id: v1(), title: 'GraphQL', isDone: false},
     ]);
-    let [filter, setFilter] = useState<FilterValuesType>('all');
+
+    //  let [filter, setFilter] = useState<FilterValuesType>('all');
 
 
     function removeTask(id: string) {
@@ -49,31 +50,32 @@ function App() {
     }
 
 
-    let tasksForTodolist = tasks;
-
-    if (filter === 'active') {
-        tasksForTodolist = tasks.filter(t => !t.isDone);
-    }
-    if (filter === 'completed') {
-        tasksForTodolist = tasks.filter(t => t.isDone);
-    }
-
-    function changeFilter(value: FilterValuesType) {
-        setFilter(value);
+    function changeFilter(todolistID: string, filterValue: FilterValuesType) {
+        setTodolists(todolists.map(tl => tl.id === todolistID ? {...tl, filter: filterValue} : tl))
     }
 
 
     return (
         <div className="App">
             {todolists.map(el => {
+                let tasksForTodolist = tasks;
+
+                if (el.filter === 'active') {
+                    tasksForTodolist = tasks.filter(t => !t.isDone);
+                }
+                if (el.filter === 'completed') {
+                    tasksForTodolist = tasks.filter(t => t.isDone);
+                }
                 return (
-                    <Todolist title="What to learn"
+                    <Todolist key={el.id}
+                              todolistID={el.id}
+                              title={el.title}
                               tasks={tasksForTodolist}
                               removeTask={removeTask}
                               changeFilter={changeFilter}
                               addTask={addTask}
                               changeTaskStatus={changeStatus}
-                              filter={filter}
+                              filter={el.filter}
                     />)
 
             })}
