@@ -11,6 +11,7 @@ type TodolistsType = {
 }
 
 function App() {
+
     let [todolists, setTodolists] = useState<Array<TodolistsType>>([
         {id: v1(), title: 'What to learn', filter: 'all'},
         {id: v1(), title: 'What to buy', filter: 'all'},
@@ -64,14 +65,19 @@ function App() {
 
     return (
         <div className="App">
-            <Todolist title="What to learn"
-                      tasks={tasksForTodolist}
-                      removeTask={removeTask}
-                      changeFilter={changeFilter}
-                      addTask={addTask}
-                      changeTaskStatus={changeStatus}
-                      filter={filter}
-            />
+            {todolists.map(el => {
+                return (
+                    <Todolist title="What to learn"
+                              tasks={tasksForTodolist}
+                              removeTask={removeTask}
+                              changeFilter={changeFilter}
+                              addTask={addTask}
+                              changeTaskStatus={changeStatus}
+                              filter={filter}
+                    />)
+
+            })}
+
         </div>
     );
 }
