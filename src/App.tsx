@@ -17,8 +17,8 @@ function App() {
     //     {id: v1(), title: 'What to buy', filter: 'all'},
     // ])
 
-    let todolistID1=v1();
-    let todolistID2=v1();
+    let todolistID1 = v1();
+    let todolistID2 = v1();
 
     let [todolists, setTodolists] = useState<Array<TodolistsType>>([
         {id: todolistID1, title: 'What to learn', filter: 'all'},
@@ -26,19 +26,19 @@ function App() {
     ])
 
     let [tasks, setTasks] = useState({
-        [todolistID1]:[
-            {id: v1(), title: "HTML&CSS", isDone: true},
-            {id: v1(), title: "JS", isDone: true},
-            {id: v1(), title: "ReactJS", isDone: false},
-            {id: v1(), title: "Rest API", isDone: false},
-            {id: v1(), title: "GraphQL", isDone: false},
+        [todolistID1]: [
+            {id: v1(), title: 'HTML&CSS', isDone: true},
+            {id: v1(), title: 'JS', isDone: true},
+            {id: v1(), title: 'ReactJS', isDone: false},
+            {id: v1(), title: 'Rest API', isDone: false},
+            {id: v1(), title: 'GraphQL', isDone: false},
         ],
-        [todolistID2]:[
-            {id: v1(), title: "HTML&CSS2", isDone: true},
-            {id: v1(), title: "JS2", isDone: true},
-            {id: v1(), title: "ReactJS2", isDone: false},
-            {id: v1(), title: "Rest API2", isDone: false},
-            {id: v1(), title: "GraphQL2", isDone: false},
+        [todolistID2]: [
+            {id: v1(), title: 'HTML&CSS2', isDone: true},
+            {id: v1(), title: 'JS2', isDone: true},
+            {id: v1(), title: 'ReactJS2', isDone: false},
+            {id: v1(), title: 'Rest API2', isDone: false},
+            {id: v1(), title: 'GraphQL2', isDone: false},
         ]
     });
 
@@ -54,10 +54,8 @@ function App() {
     //  let [filter, setFilter] = useState<FilterValuesType>('all');
 
 
-    function removeTask(todolistID: string,taskId: string) {
-        // let filteredTasks = tasks.filter(t => t.id != id);
-        // setTasks(filteredTasks);
-setTasks({...tasks,[todolistID] : tasks[taskId].filter(fl=> fl.id !== taskId)})
+    function removeTask(todolistID: string, taskId: string) {
+        setTasks({...tasks, [todolistID]: tasks[todolistID].filter(fl => fl.id !== taskId)})
     }
 
     function addTask(title: string) {
