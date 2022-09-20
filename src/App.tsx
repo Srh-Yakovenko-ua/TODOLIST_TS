@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import './App.css';
 import {Todolist} from './Todolist';
 import {v1} from 'uuid';
+import {Input} from './Components/Input';
 
 export type FilterValuesType = 'all' | 'active' | 'completed';
 type TodolistsType = {
@@ -43,17 +44,6 @@ function App() {
     });
 
 
-    // let [tasks, setTasks] = useState([
-    //     {id: v1(), title: 'HTML&CSS', isDone: true},
-    //     {id: v1(), title: 'JS', isDone: true},
-    //     {id: v1(), title: 'ReactJS', isDone: false},
-    //     {id: v1(), title: 'Rest API', isDone: false},
-    //     {id: v1(), title: 'GraphQL', isDone: false},
-    // ]);
-
-    //  let [filter, setFilter] = useState<FilterValuesType>('all');
-
-
     function removeTask(todolistID: string, taskId: string) {
         setTasks({...tasks, [todolistID]: tasks[todolistID].filter(fl => fl.id !== taskId)})
     }
@@ -75,11 +65,21 @@ function App() {
 
     const removeTodolist = (todolistID: string) => {
         setTodolists(todolists.filter(el => el.id !== todolistID))
-        delete tasks[todolistID]
+        //delete tasks[todolistID]
+        const deleteTasks = Object.fromEntries(Object.entries(tasks).filter(([key]) => key !== todolistID))
+        setTasks(deleteTasks)
+    }
+
+    const addTodolist = (newTitle: string) => {
+        const newTodolistId = v1();
+        const newTodolist: TodolistsType = {id: newTodolistId, title: newTitle, filter: 'all'}
+        setTodolists([...todolists, newTodolist])
+        setTasks({...tasks, [newTodolistId]: []})
     }
 
     return (
         <div className="App">
+            <Input callback={addTodolist}/>
             {todolists.map(el => {
                 let tasksForTodolist = tasks[el.id]
 
@@ -99,7 +99,7 @@ function App() {
                               addTask={addTask}
                               changeTaskStatus={changeStatus}
                               filter={el.filter}
-                              removeTodolist={removeTodolist }
+                              removeTodolist={removeTodolist}
                     />)
 
             })}
