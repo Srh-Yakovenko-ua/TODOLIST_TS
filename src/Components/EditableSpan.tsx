@@ -11,16 +11,13 @@ export const EditableSpan = (props: EditableSpanType) => {
 
     const changeEditHandler = () => {
         setEdit(!edit)
-        changeTask()
+        props.callback(currentTitle.trim());
     }
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setTitle(e.currentTarget.value)
     }
 
-    const changeTask = () => {
-        props.callback(currentTitle.trim());
 
-    }
 
     return (
         edit ?
