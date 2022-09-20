@@ -1,6 +1,7 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {FilterValuesType} from './App';
 import {Input} from './Components/Input';
+import {EditableSpan} from './Components/EditableSpan';
 
 type TaskType = {
     id: string
@@ -18,6 +19,7 @@ type PropsType = {
     changeTaskStatus: (todolistID: string, taskId: string, isDone: boolean) => void
     filter: FilterValuesType
     removeTodolist: (todolistID: string) => void
+    changeTask: (todolistID: string, taskId: string,  currentTitle: string) => void
 }
 
 
@@ -39,6 +41,7 @@ export function Todolist(props: PropsType) {
         props.addTask(props.todolistID, newTitle)
     }
 
+
     return <div>
         <h3>{props.title}
             <button onClick={removeTodolistHandler}>x</button>
@@ -53,11 +56,15 @@ export function Todolist(props: PropsType) {
                         props.changeTaskStatus(props.todolistID, t.id, e.currentTarget.checked);
                     }
 
+                    const changeTaskHandler = (currentTitle: string) => {
+                        props.changeTask(props.todolistID, t.id, currentTitle)
+                    }
+
                     return <li key={t.id} className={t.isDone ? 'is-done' : ''}>
                         <input type="checkbox"
                                onChange={onChangeHandler}
                                checked={t.isDone}/>
-                        <span>{t.title}</span>
+                        <EditableSpan title={t.title} callback={changeTaskHandler}/>
                         <button onClick={onClickHandler}>x</button>
                     </li>
                 })
