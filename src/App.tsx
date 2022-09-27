@@ -65,7 +65,6 @@ function App() {
 
     const removeTodolist = (todolistID: string) => {
         setTodolists(todolists.filter(el => el.id !== todolistID))
-        //delete tasks[todolistID]
         const deleteTasks = Object.fromEntries(Object.entries(tasks).filter(([key]) => key !== todolistID))
         setTasks(deleteTasks)
     }
@@ -77,17 +76,20 @@ function App() {
         setTasks({...tasks, [newTodolistId]: []})
     }
 
-    const changeTask = (todolistID: string,taskId: string , currentTitle : string)=> {
-setTasks({...tasks,[todolistID] : tasks[todolistID].map(el => el.id === taskId ? {...el, title: currentTitle} : el)})
+    const changeTask = (todolistID: string, taskId: string, currentTitle: string) => {
+        setTasks({
+            ...tasks,
+            [todolistID]: tasks[todolistID].map(el => el.id === taskId ? {...el, title: currentTitle} : el)
+        })
     }
 
-    const editTodolist = (todolistID: string,currentTitle : string) => {
-        setTodolists(todolists.map(td => td.id === todolistID ? {...td, title : currentTitle} : td))
+    const editTodolist = (todolistID: string, currentTitle: string) => {
+        setTodolists(todolists.map(td => td.id === todolistID ? {...td, title: currentTitle} : td))
     }
 
     return (
         <div className="App">
-            <Input callback={addTodolist} />
+            <Input callback={addTodolist}/>
             {todolists.map(el => {
                 let tasksForTodolist = tasks[el.id]
 
