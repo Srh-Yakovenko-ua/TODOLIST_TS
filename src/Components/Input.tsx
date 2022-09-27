@@ -1,5 +1,5 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
-import { Fab} from '@mui/material';
+import {Fab, TextField} from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 
 type InputPropsType = {
@@ -8,14 +8,14 @@ type InputPropsType = {
 
 export const Input = (props: InputPropsType) => {
     let [title, setTitle] = useState('')
-    let [error, setError] = useState<string | null>(null)
+    let [error, setError] = useState(false)
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setTitle(e.currentTarget.value)
     }
 
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        setError(null);
+        setError(false);
         if (e.charCode === 13) {
             addTask();
         }
@@ -26,21 +26,27 @@ export const Input = (props: InputPropsType) => {
             props.callback(title.trim());
             setTitle('');
         } else {
-            setError('Title is required');
+            setError(true);
         }
     }
 
     return (
         <div>
-            <input value={title}
-                   onChange={onChangeHandler}
-                   onKeyPress={onKeyPressHandler}
-                   className={error ? 'error' : ''}
+            <TextField id="outlined-basic"
+                       variant="outlined"
+                       size={'small'}
+                       label={error ? "Title is required" : 'type...'}
+                       value={title}
+                       onChange={onChangeHandler}
+                       onKeyPress={onKeyPressHandler}
+                       error={error}
             />
-            <Fab size="small" color="primary" onClick={addTask} style={{maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'}}>
+            <Fab size="small"
+                 color="primary"
+                 onClick={addTask}
+                 style={{maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', margin: '5px'}}>
                 <AddIcon/>
             </Fab>
-            {error && <div className="error-message">{error}</div>}
         </div>
     );
 };
