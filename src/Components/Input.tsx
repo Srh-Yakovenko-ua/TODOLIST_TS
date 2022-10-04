@@ -16,7 +16,7 @@ export const Input = (props: InputPropsType) => {
 
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         setError(false);
-        if (e.charCode === 13) {
+        if (e.key === 'Enter') {
             addTask();
         }
     }
@@ -30,12 +30,20 @@ export const Input = (props: InputPropsType) => {
         }
     }
 
+    const styleFabBtn = {
+        maxWidth: '30px',
+        maxHeight: '30px',
+        minWidth: '30px',
+        minHeight: '30px',
+        margin: '5px'
+    }
+
     return (
         <div>
             <TextField id="outlined-basic"
                        variant="outlined"
                        size={'small'}
-                       label={error ? "Title is required" : 'type...'}
+                       label={error ? 'Title is required' : 'type...'}
                        value={title}
                        onChange={onChangeHandler}
                        onKeyPress={onKeyPressHandler}
@@ -44,7 +52,7 @@ export const Input = (props: InputPropsType) => {
             <Fab size="small"
                  color="primary"
                  onClick={addTask}
-                 style={{maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', margin: '5px'}}>
+                 style={styleFabBtn}>
                 <AddIcon/>
             </Fab>
         </div>
