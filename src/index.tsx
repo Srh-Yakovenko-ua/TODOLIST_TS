@@ -1,6 +1,5 @@
 import React from 'react';
 import './index.css';
-// @ts-ignore
 import {createRoot} from 'react-dom/client';
 import * as serviceWorker from './serviceWorker';
 

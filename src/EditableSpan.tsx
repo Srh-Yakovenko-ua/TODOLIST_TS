@@ -1,5 +1,6 @@
 import React, {ChangeEvent, useState} from 'react';
-import {TextField} from '@material-ui/core';
+import {TextField} from '@mui/material';
+
 
 type EditableSpanPropsType = {
     value: string
@@ -12,7 +13,6 @@ export function EditableSpan(props: EditableSpanPropsType) {
 
     const activateEditMode = () => {
         setEditMode(true);
-        setTitle(props.value);
     }
     const activateViewMode = () => {
         setEditMode(false);
