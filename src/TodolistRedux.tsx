@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from 'react';
+import React, {ChangeEvent, useCallback} from 'react';
 import {FilterValuesType} from './AppWithRedux';
 import {EditableSpan} from './EditableSpan';
 import {AddItemForm} from './AddItemForm';
@@ -20,22 +20,23 @@ export type TaskType = {
     isDone: boolean
 }
 
-export const TodolistRedux = ({todolistId, title, filter}: TodolistReduxPropsType) => {
+export const TodolistRedux = React.memo(({todolistId, title, filter}: TodolistReduxPropsType) => {
 
+    console.log('todo')
     let tasks = useSelector<AppRootStateType, Array<TaskType>>(state => state.tasks[todolistId])
     const dispatch = useDispatch()
 
-    const removeTodolist = () => {
+    const removeTodolist = useCallback(() => {
         dispatch(removeTodolistAC(todolistId))
-    }
+    }, [dispatch,todolistId])
 
-    const changeTodolistTitle = (title: string) => {
+    const changeTodolistTitle = useCallback((title: string) => {
         dispatch(changeTodolistTitleAC(todolistId, title))
-    }
+    }, [dispatch,todolistId])
 
-    const addTask = (title: string) => {
+    const addTask = useCallback((title: string) => {
         dispatch(addTaskAC(title, todolistId))
-    }
+    }, [dispatch,todolistId])
 
     const onAllClickHandler = () => dispatch(changeTodolistFilterAC(todolistId, 'all'))
     const onActiveClickHandler = () => dispatch(changeTodolistFilterAC(todolistId, 'active'))
@@ -100,5 +101,5 @@ export const TodolistRedux = ({todolistId, title, filter}: TodolistReduxPropsTyp
             </Button>
         </div>
     </div>
-};
+});
 
