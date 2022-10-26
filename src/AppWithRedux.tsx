@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 
 
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from './state/store';
 import {TaskType, TodolistRedux} from './TodolistRedux';
-import { Container, Grid, Paper} from '@mui/material';
+import {Container, Grid, Paper} from '@mui/material';
 import {addTodolistAC} from './state/todo-list-reducer';
 import {AddItemForm} from './AddItemForm';
 
@@ -21,17 +21,17 @@ export type TasksStateType = {
 }
 
 
-function AppWithRedux() {
-
+const AppWithRedux = React.memo(() => {
+    console.log('App')
     let todolists = useSelector<AppRootStateType, Array<TodolistType>>(state => state.todolists)
 
 
     const dispatch = useDispatch()
 
 
-    function addTodolist(title: string) {
+    const addTodolist = useCallback((title: string) => {
         dispatch(addTodolistAC(title))
-    }
+    }, [dispatch])
 
     return (
         <div className="App">
@@ -57,6 +57,6 @@ function AppWithRedux() {
             </Container>
         </div>
     );
-}
+})
 
 export default AppWithRedux;
