@@ -39,9 +39,17 @@ export const TodolistRedux = React.memo(({todolistId, title, filter}: TodolistRe
         dispatch(addTaskAC(title, todolistId))
     }, [dispatch, todolistId])
 
-    const onAllClickHandler = () => dispatch(changeTodolistFilterAC(todolistId, 'all'))
-    const onActiveClickHandler = () => dispatch(changeTodolistFilterAC(todolistId, 'active'))
-    const onCompletedClickHandler = () => dispatch(changeTodolistFilterAC(todolistId, 'completed'))
+    const onAllClickHandler = useCallback(() => {
+        dispatch(changeTodolistFilterAC(todolistId, 'all'))
+    }, [todolistId, dispatch])
+
+    const onActiveClickHandler = useCallback(() => {
+        dispatch(changeTodolistFilterAC(todolistId, 'active'))
+    }, [todolistId, dispatch])
+
+    const onCompletedClickHandler = useCallback(() => {
+        dispatch(changeTodolistFilterAC(todolistId, 'completed'))
+    }, [todolistId, dispatch])
 
 
     if (filter === 'active') {
