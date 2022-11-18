@@ -25,9 +25,12 @@ export type ChangeTaskTitleActionType = {
     title: string
 }
 
-type ActionsType = RemoveTaskActionType | AddTaskActionType
-    | ChangeTaskStatusActionType | ChangeTaskTitleActionType
-    | AddTodolistActionType | RemoveTodolistActionType;
+type ActionsType = ReturnType<typeof removeTaskAC>
+    | ReturnType<typeof addTaskAC>
+    | ReturnType<typeof changeTaskStatusAC>
+    | ReturnType<typeof changeTaskTitleAC>
+    | AddTodolistActionType
+    | RemoveTodolistActionType;
 
 const initialState: TasksStateType = {}
 
@@ -43,7 +46,7 @@ export const tasksReducer = (state = initialState, action: ActionsType): TasksSt
             const newTask = {id: v1(), title: action.title, isDone: false};
             return {
                 ...state,
-                [action.todolistId]: [...state[action.todolistId], newTask]
+                [action.todolistId]: [newTask, ...state[action.todolistId]]
             }
         }
         case 'CHANGE-TASK-STATUS': {
