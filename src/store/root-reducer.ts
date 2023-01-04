@@ -9,7 +9,7 @@ export type RootReducerType = ReturnType<typeof rootReducer>
 export const rootReducer = combineReducers({
     tasks: tasksReducer,
     todolist: todolistReducer,
-    app : appReducer,
+    app: appReducer,
 })
 
 
