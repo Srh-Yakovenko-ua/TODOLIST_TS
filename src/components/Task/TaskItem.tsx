@@ -6,7 +6,7 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import {RequestStatusType} from '../../store/app/app-reducer';
 
 
-type TaskTypeProps = {
+interface TaskTypeProps {
     todolistId: string
     taskTitle: string
     taskID: string
@@ -17,16 +17,16 @@ type TaskTypeProps = {
     onChangeValueTextSpan: (newValue: string, taskID: string) => void
 }
 
-export const TaskItem: React.FC<TaskTypeProps> = (
-    {
-        taskTitle,
-        taskID,
-        entityStatusTask,
-        updateStatusCheckbox,
-        handlerRemoveTask,
-        onChangeValueTextSpan,
-        taskStatus
-    }) => {
+export const TaskItem: React.FC<TaskTypeProps> = ({
+                                                      taskTitle,
+                                                      taskID,
+                                                      entityStatusTask,
+                                                      updateStatusCheckbox,
+                                                      handlerRemoveTask,
+                                                      onChangeValueTextSpan,
+                                                      taskStatus
+                                                  }) => {
+
 
     return (
         <div>
@@ -38,8 +38,11 @@ export const TaskItem: React.FC<TaskTypeProps> = (
             />
             <EditableSpan title={taskTitle}
                           disabled={entityStatusTask === 'loading'}
-                          onChangeValueTextSpan={(newValue: string) => onChangeValueTextSpan(newValue, taskID)}/>
-            <Tooltip title="delete Task" placement="right">
+                          taskStatus={taskStatus}
+                          onChangeValueTextSpan={(newValue: string) => onChangeValueTextSpan(newValue, taskID)}
+            />
+            <Tooltip title="delete Task"
+                     placement="right">
                 <IconButton disabled={entityStatusTask === 'loading'}
                             onClick={() => handlerRemoveTask(taskID)}
                             color="primary"

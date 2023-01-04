@@ -2,20 +2,19 @@ import React, {ChangeEvent} from 'react';
 import {TaskItem} from './TaskItem';
 import {useAppDispatch, useAppSelector} from '../../store';
 import {TaskStatuses, TasksType} from '../../store/tasks/tasks-types';
-import {filterSelector} from '../../store/todolist/todolist-selectors';
 import {FiltersType} from '../../store/todolist/todolist-types';
 import {removeTaskThunk, updateTaskThunk} from '../../store/tasks/tasks-reducer';
+import {filterSelector} from '../../store/tasks/tasks-selectors';
 
 interface TaskListType {
     filter: FiltersType
     todolistId: string
 }
 
-export const TaskList: React.FC<TaskListType> = (
-    {
-        filter,
-        todolistId
-    }) => {
+export const TaskList: React.FC<TaskListType> = ({
+                                                     filter,
+                                                     todolistId,
+                                                 }) => {
     const dispatch = useAppDispatch();
     const tasks = useAppSelector<TasksType[] | undefined>(state => filterSelector(state, filter, todolistId))
 
