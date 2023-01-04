@@ -4,7 +4,7 @@ import {IconButton, TextField, Tooltip} from '@mui/material';
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 
 
-type AddFormTodoList = {
+interface AddFormTodoList {
     addItem: (title: string) => void
     label?: string
     title?: string
@@ -15,7 +15,7 @@ export const AddItemForm: React.FC<AddFormTodoList> = ({
                                                            addItem,
                                                            label,
                                                            title,
-                                                           disabled
+                                                           disabled,
                                                        }) => {
     const [value, setValue] = useState<string>('');
     const [error, setError] = useState<string>('');
@@ -23,8 +23,7 @@ export const AddItemForm: React.FC<AddFormTodoList> = ({
 
     const onChangeHandlerValue = (e: ChangeEvent<HTMLInputElement>) => {
         setError('')
-        const value = e.currentTarget.value
-        setValue(value)
+        setValue(e.currentTarget.value)
     }
     const onKeyUpHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
@@ -53,9 +52,8 @@ export const AddItemForm: React.FC<AddFormTodoList> = ({
                        disabled={disabled}
 
             />
-
-
-            <Tooltip title={!title ? 'add Task' : title} placement="right">
+            <Tooltip title={!title ? 'add Task' : title}
+                     placement="right">
                 <IconButton onClick={addItemHandler}
                             disabled={disabled}
                             color="primary">
