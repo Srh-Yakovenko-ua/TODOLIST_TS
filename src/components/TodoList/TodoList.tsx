@@ -1,59 +1,33 @@
 import React from 'react';
-import {AddItemForm} from '../../common/AddItemForm';
-import {removeTodoThunk, updateTodoTitleThunk} from '../../store/todolist/todolist-reducer';
-import {createNewTaskThunk} from '../../store/tasks/tasks-reducer';
-import {changeFilterTodoAC} from '../../store/todolist/todolist-action';
-import {FiltersType} from '../../store/todolist/todolist-types';
-import {useAppDispatch} from '../../store';
-import {RequestStatusType} from '../../store/app/app-reducer';
-import {TitleFormNameTodo} from './TitleFormNameTodo';
-import {ButtonFilter} from './ButtonFilter';
-import {TaskList} from '../Task/TaskList';
-
-type TodoListType = {
-    todolistId: string
-    title: string
-    filter: FiltersType
-    entityTodoStatus: RequestStatusType
-}
+import {useAppSelector} from '../../store';
+import {TodoStateType} from '../../store/todolist/todolist-types';
+import {allTodoSelectors} from '../../store/todolist/todolist-selectors';
+import Grid2 from '@mui/material/Unstable_Grid2';
+import {Paper} from '@mui/material';
+import {TodoItem} from './TodoItem';
 
 
-export const TodoList: React.FC<TodoListType> = (
-    {
-        todolistId,
-        title,
-        filter,
-        entityTodoStatus
-    }) => {
-    const dispatch = useAppDispatch();
-
-    const addTask = (title: string) => dispatch(createNewTaskThunk(title, todolistId))
-    const onChangeTodoTitle = (title: string) => dispatch(updateTodoTitleThunk(todolistId, title))
-    const removeTodo = () => dispatch(removeTodoThunk(todolistId))
-
-
-    const filterTodo = (e: React.MouseEvent<HTMLButtonElement>) => {
-        const DATA_SET = e.currentTarget.dataset.set as FiltersType
-        DATA_SET && dispatch(changeFilterTodoAC(DATA_SET, todolistId))
-    }
+export const TodoList = () => {
+    const todo = useAppSelector<TodoStateType[]>(allTodoSelectors)
 
     return (
-        <>
-            <TitleFormNameTodo title={title}
-                               entityTodoStatus={entityTodoStatus}
-                               onChangeTodoTitle={onChangeTodoTitle}
-                               removeTodo={removeTodo}
-            />
-            <div style={{display: 'flex', gap: '30px'}}>
-                <AddItemForm addItem={addTask}
-                             disabled={entityTodoStatus === 'loading'}/>
-            </div>
-            <TaskList filter={filter}
-                      todolistId={todolistId}/>
-            <ButtonFilter filter={filter}
-                          filterTodo={filterTodo}
-            />
-        </>
-    );
+        <Grid2 container spacing={3}>
+            {todo.map(todo => {
+                return (
+                    <Grid2 key={todo.id}>
+                        <Paper style={{padding: '15px'}} elevation={4}>
+                            <TodoItem
+                                key={todo.id}
+                                todolistId={todo.id}
+                                title={todo.title}
+                                filter={todo.filter}
+                                entityTodoStatus={todo.entityStatus}
+                            />
+                        </Paper>
+                    </Grid2>
+                )
+            })}
+        </Grid2>
+    )
 };
 
