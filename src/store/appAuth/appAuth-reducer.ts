@@ -1,25 +1,29 @@
 import { RootThunkType } from "../index";
 import { authApi } from "../../api/auth-api";
-import { setAppPreloaderStatusAC } from "../app/app-reducer";
-import { FormDataValuesType } from "../../components/Auth/AuthForm";
+import { setAppPreloaderStatusAC } from "../app/app-actions";
+import { FormDataValuesType } from "../../components/Auth/AuthLoginForm";
 import {
   handleServerAppError,
   handleServerNetworkError,
 } from "../../utils/error-utils";
 import axios, { AxiosError } from "axios";
+import { RESPONSE_RESULT_CODE_SUCCESS } from "../../utils/constants/constanst";
 
 export enum ACTION_APP_AUTH {
   SET_AUTHORIZED_APP = "@@auth/SET_AUTHORIZED_APP",
   AUTH_INITIALIZED = "@@auth/AUTH_INITIALIZED",
 }
 
-export type AppAuthStateType = typeof initialState;
+export interface AppAuthStateType {
+  isAuth: boolean;
+  isAppAuthInitialized: boolean;
+}
 export type ActionAppAuth =
   | ReturnType<typeof setAuthAppAC>
   | ReturnType<typeof authInitializedAC>;
 
 const initialState = {
-  isAuth: undefined as undefined | boolean,
+  isAuth: false,
   isAppAuthInitialized: false,
 };
 
@@ -63,7 +67,7 @@ export const authMeTC = (): RootThunkType => async (dispatch) => {
   dispatch(authInitializedAC(false));
   try {
     const { data } = await authApi.authMe();
-    if (data.resultCode === 0) {
+    if (data.resultCode === RESPONSE_RESULT_CODE_SUCCESS) {
       dispatch(setAuthAppAC(true));
       dispatch(authInitializedAC(true));
     } else {
@@ -86,7 +90,7 @@ export const authLoginTC =
     dispatch(setAppPreloaderStatusAC("loading"));
     try {
       const { data } = await authApi.login(email, password, rememberMe);
-      if (data.resultCode === 0) {
+      if (data.resultCode === RESPONSE_RESULT_CODE_SUCCESS) {
         dispatch(setAuthAppAC(true));
         dispatch(setAppPreloaderStatusAC("succeeded"));
         dispatch(authMeTC());
@@ -106,7 +110,7 @@ export const logoutTC = (): RootThunkType => async (dispatch) => {
   dispatch(setAppPreloaderStatusAC("loading"));
   try {
     const { data } = await authApi.logout();
-    if (data.resultCode === 0) {
+    if (data.resultCode === RESPONSE_RESULT_CODE_SUCCESS) {
       dispatch(setAuthAppAC(false));
       dispatch(setAppPreloaderStatusAC("succeeded"));
     } else {

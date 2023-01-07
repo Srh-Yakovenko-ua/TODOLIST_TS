@@ -1,39 +1,46 @@
-import React, {useEffect} from 'react';
-import './App.css';
-import {AddItemForm} from './common/AddItemForm';
-import {createNewTodoThunk, getTodoListsThunk} from './store/todolist/todolist-reducer';
-import {useAppDispatch, useAppSelector} from './store';
-import {Container, LinearProgress} from '@mui/material';
-import Grid2 from '@mui/material/Unstable_Grid2';
-import CustomizedSnackbars from './common/ErrorSnackbar';
-import {RequestStatusType} from './store/app/app-reducer';
-import {TodoList} from './components/TodoList/TodoList';
-import {statusSelectors} from './store/app/app-selectors';
-
+import React, { useEffect } from "react";
+import "./App.css";
+import { useAppDispatch, useAppSelector } from "./store";
+import CustomizedSnackbars from "./common/ErrorSnackbar";
+import { TodoList } from "./components/TodoList/TodoList";
+import { Route, Routes } from "react-router-dom";
+import { ErrorRoute } from "./components/ErrorRoute-404/ErrorRoute";
+import { Login } from "./components/Auth/Login";
+import { appStatusSelectors } from "./store/app/app-selectors";
+import { authMeTC } from "./store/appAuth/appAuth-reducer";
+import { MenuAppBar } from "./components/AppBar/AppBar";
+import { isAppAuthInitializedSelectors } from "./store/appAuth/appAuth-selectors";
+import { Preloader } from "./common/preloader/Preloader";
+import { WrapperAppPreloader } from "./common/preloader/preloader-style";
 
 function App() {
-    const dispatch = useAppDispatch();
-    const status = useAppSelector<RequestStatusType>(statusSelectors)
-    const createNewTodo = (title: string) => dispatch(createNewTodoThunk(title))
+  const dispatch = useAppDispatch();
+  const status = useAppSelector(appStatusSelectors);
+  const isAppAuthInitialized = useAppSelector(isAppAuthInitializedSelectors);
 
+  useEffect(() => {
+    dispatch(authMeTC());
+  }, [dispatch]);
 
-    useEffect(() => {
-        dispatch(getTodoListsThunk())
-    }, [])
+  if (!isAppAuthInitialized) {
     return (
-        <div>
-            <CustomizedSnackbars/>
-            <Container fixed>
-                <Grid2 container style={{padding: '15px'}}>
-                    <AddItemForm addItem={createNewTodo} label="create new Todo" title="add Todo"/>
-                </Grid2>
-                {status === 'loading' && <LinearProgress color="primary"/>}
-                <TodoList/>
-            </Container>
-        </div>
+      <WrapperAppPreloader>
+        <Preloader />
+      </WrapperAppPreloader>
     );
+  }
+  return (
+    <div>
+      <CustomizedSnackbars />
+      <MenuAppBar />
+      {status === "loading" && <Preloader />}
+      <Routes>
+        <Route path={"/"} element={<TodoList />} />
+        <Route path={"/login"} element={<Login />} />
+        <Route path={"*"} element={<ErrorRoute />} />
+      </Routes>
+    </div>
+  );
 }
 
 export default App;
-
-
