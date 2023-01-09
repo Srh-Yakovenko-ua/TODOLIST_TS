@@ -11,7 +11,7 @@ type ErrorUtilsDispatchType = Dispatch<AppActionType>;
 export const handleServerAppError = <T>(
   data: GeneralResponseType<T>,
   dispatch: ErrorUtilsDispatchType
-) => {
+): void => {
   if (data.messages.length) {
     dispatch(setAppErrorAC(data.messages[0]));
   } else {
@@ -23,7 +23,7 @@ export const handleServerAppError = <T>(
 export const handleServerNetworkError = (
   error: { message: string },
   dispatch: ErrorUtilsDispatchType
-) => {
+): void => {
   dispatch(setAppErrorAC(error.message));
   dispatch(setAppPreloaderStatusAC("failed"));
 };
