@@ -3,7 +3,7 @@ import { Box, Button, Container, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import { useNavigate } from "react-router-dom";
 
-export const ErrorRoute = () => {
+export const ErrorRoute404 = () => {
   const navigate = useNavigate();
 
   return (

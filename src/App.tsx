@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "./store";
 import CustomizedSnackbars from "./common/ErrorSnackbar";
 import { TodoList } from "./components/TodoList/TodoList";
 import { Route, Routes } from "react-router-dom";
-import { ErrorRoute } from "./components/ErrorRoute-404/ErrorRoute";
+import { ErrorRoute404 } from "./components/ErrorRoute-404/ErrorRoute404";
 import { Login } from "./components/Auth/Login";
 import { appStatusSelectors } from "./store/app/app-selectors";
 import { authMeTC } from "./store/appAuth/appAuth-reducer";
@@ -37,7 +37,7 @@ function App() {
       <Routes>
         <Route path={"/"} element={<TodoList />} />
         <Route path={"/login"} element={<Login />} />
-        <Route path={"*"} element={<ErrorRoute />} />
+        <Route path={"*"} element={<ErrorRoute404 />} />
       </Routes>
     </div>
   );
