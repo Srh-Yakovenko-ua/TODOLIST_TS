@@ -33,9 +33,8 @@ export const AddItemForm: React.FC<AddFormTodoList> = ({
     if (e.key === "Enter") addItemHandler();
   };
   const addItemHandler = () => {
-    if (value?.trim()?.length > 100) {
-      return;
-    }
+    if (value?.trim()?.length > 100) return;
+
     if (value?.trim() !== "") {
       addItem(value);
       setValue("");

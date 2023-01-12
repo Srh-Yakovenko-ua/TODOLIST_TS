@@ -18,6 +18,7 @@ export interface AppAuthStateType {
   isAuth: boolean;
   isAppAuthInitialized: boolean;
 }
+
 export type ActionAppAuth =
   | ReturnType<typeof setAuthAppAC>
   | ReturnType<typeof authInitializedAC>;
@@ -46,22 +47,6 @@ export const appAuthReducer = (
       return state;
   }
 };
-
-export const setAuthAppAC = (isAuth: boolean) =>
-  ({
-    type: ACTION_APP_AUTH.SET_AUTHORIZED_APP,
-    payload: {
-      isAuth,
-    },
-  } as const);
-
-export const authInitializedAC = (isAppAuth: boolean) =>
-  ({
-    type: ACTION_APP_AUTH.AUTH_INITIALIZED,
-    payload: {
-      isAppAuth,
-    },
-  } as const);
 
 export const authMeTC = (): RootThunkType => async (dispatch) => {
   dispatch(authInitializedAC(false));
@@ -122,3 +107,19 @@ export const logoutTC = (): RootThunkType => async (dispatch) => {
     }
   }
 };
+
+export const setAuthAppAC = (isAuth: boolean) =>
+  ({
+    type: ACTION_APP_AUTH.SET_AUTHORIZED_APP,
+    payload: {
+      isAuth,
+    },
+  } as const);
+
+export const authInitializedAC = (isAppAuth: boolean) =>
+  ({
+    type: ACTION_APP_AUTH.AUTH_INITIALIZED,
+    payload: {
+      isAppAuth,
+    },
+  } as const);

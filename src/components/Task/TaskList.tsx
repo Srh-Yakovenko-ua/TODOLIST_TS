@@ -32,23 +32,21 @@ export const TaskList: React.FC<TaskListType> = ({ filter, todolistId }) => {
   const onChangeValueTextSpan = (newValue: string, taskID: string): void =>
     dispatch(updateTaskTC(todolistId, taskID, { title: newValue }));
 
-  const tasksItemLayer =
-    tasks &&
-    tasks.map((task) => {
-      return (
-        <TaskItem
-          key={task.id}
-          taskTitle={task.title}
-          taskID={task.id}
-          taskStatus={task.status}
-          todolistId={todolistId}
-          entityStatusTask={task.entityStatusTask}
-          updateStatusCheckbox={updateStatusCheckbox}
-          handlerRemoveTask={handlerRemoveTask}
-          onChangeValueTextSpan={onChangeValueTextSpan}
-        />
-      );
-    });
+  const tasksItemLayer = tasks?.map((task) => {
+    return (
+      <TaskItem
+        key={task.id}
+        taskTitle={task.title}
+        taskID={task.id}
+        taskStatus={task.status}
+        todolistId={todolistId}
+        entityStatusTask={task.entityStatusTask}
+        updateStatusCheckbox={updateStatusCheckbox}
+        handlerRemoveTask={handlerRemoveTask}
+        onChangeValueTextSpan={onChangeValueTextSpan}
+      />
+    );
+  });
 
   return <>{tasksItemLayer}</>;
 };

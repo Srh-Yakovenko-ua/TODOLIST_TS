@@ -37,7 +37,7 @@ export const EditableSpan: React.FC<EditableSpanType> = ({
   };
   return (
     <>
-      {!editMode ? (
+      {!editMode && (
         <>
           <Tooltip
             title={disabled ? "" : "double click for edit"}
@@ -53,7 +53,8 @@ export const EditableSpan: React.FC<EditableSpanType> = ({
           </Tooltip>
           <Span taskStatusProps={taskStatus}>{newTitle}</Span>
         </>
-      ) : (
+      )}
+      {editMode && (
         <TextField
           type="text"
           value={newTitle}
