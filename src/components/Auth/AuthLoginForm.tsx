@@ -1,47 +1,24 @@
 import React from "react";
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import { useAppDispatch } from "../../store";
-import { authLoginTC } from "../../store/appAuth/appAuth-reducer";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import {
+  Container,
+  Typography,
+  Box,
+  Checkbox,
+  FormControlLabel,
+  TextField,
+  CssBaseline,
+  Button,
+  Avatar,
+} from "@mui/material";
 
-export interface FormDataValuesType {
-  email: string;
-  password: string;
-  rememberMe: boolean;
-}
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useAuthLoginForm } from "./useAuthLoginForm";
 
 const theme = createTheme();
 
 export const AuthLoginForm = () => {
-  const dispatch = useAppDispatch();
-  const formik = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-      rememberMe: false,
-    },
-    validationSchema: Yup.object({
-      email: Yup.string().email("Invalid email address").required("Required"),
-      password: Yup.string()
-        .max(20, "Must be 20 characters or less")
-        .required("Required"),
-    }),
-    onSubmit: (values: FormDataValuesType): void => {
-      dispatch(authLoginTC(values));
-      formik.resetForm();
-    },
-  });
+  const { errors, touched, handleSubmit, getFieldProps } = useAuthLoginForm();
 
   return (
     <ThemeProvider theme={theme}>
@@ -61,24 +38,15 @@ export const AuthLoginForm = () => {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <Box
-            component="form"
-            onSubmit={formik.handleSubmit}
-            noValidate
-            sx={{ mt: 1 }}
-          >
+          <Box component="form" onSubmit={handleSubmit} noValidate>
             <TextField
               id="email"
               type="email"
               margin="normal"
               label="Email Address"
-              error={!!formik.errors.email}
-              helperText={
-                formik.touched.email &&
-                formik.errors.email &&
-                formik.errors.email
-              }
-              {...formik.getFieldProps("email")}
+              error={touched.email && !!errors.email}
+              helperText={touched.email && errors.email}
+              {...getFieldProps("email")}
               fullWidth
             />
             <TextField
@@ -86,19 +54,15 @@ export const AuthLoginForm = () => {
               type="password"
               margin="normal"
               label="Password"
-              error={!!formik.errors.password}
-              {...formik.getFieldProps("password")}
-              helperText={
-                formik.touched.password &&
-                formik.errors.password &&
-                formik.errors.password
-              }
+              error={touched.password && !!errors.password}
+              {...getFieldProps("password")}
+              helperText={touched.password && errors.password}
               fullWidth
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
-              {...formik.getFieldProps("rememberMe")}
+              {...getFieldProps("rememberMe")}
             />
             <Button
               type="submit"
