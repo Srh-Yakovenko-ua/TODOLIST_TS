@@ -14,6 +14,11 @@ import {
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useAuthLoginForm } from "./useAuthLoginForm";
+import {
+  authButton,
+  authContainer,
+  authSingInAvatar,
+} from "./auth-login-form.style";
 
 const theme = createTheme();
 
@@ -24,15 +29,8 @@ export const AuthLoginForm = () => {
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+        <Box sx={authContainer}>
+          <Avatar sx={authSingInAvatar}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
@@ -64,12 +62,7 @@ export const AuthLoginForm = () => {
               label="Remember me"
               {...getFieldProps("rememberMe")}
             />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
+            <Button type="submit" fullWidth variant="contained" sx={authButton}>
               Sign In
             </Button>
           </Box>
