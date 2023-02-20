@@ -17,7 +17,7 @@ export const TaskList: React.FC<TaskListType> = ({ filter, todolistId }) => {
     filterSelector(state, filter, todolistId)
   );
 
-  const updateStatusCheckbox = (
+  const setNewStatusCheckbox = (
     e: ChangeEvent<HTMLInputElement>,
     taskID: string
   ): void => {
@@ -27,12 +27,12 @@ export const TaskList: React.FC<TaskListType> = ({ filter, todolistId }) => {
     dispatch(updateTaskTC(todolistId, taskID, { status }));
   };
 
-  const handlerRemoveTask = (taskID: string): void =>
+  const removeCurrentTask = (taskID: string): void =>
     dispatch(removeTaskTC(taskID, todolistId));
-  const onChangeValueTextSpan = (newValue: string, taskID: string): void =>
+  const setNewTaskName = (newValue: string, taskID: string): void =>
     dispatch(updateTaskTC(todolistId, taskID, { title: newValue }));
 
-  const tasksItemLayer = tasks?.map((task) => {
+  const tasksItemLayout = tasks?.map((task) => {
     return (
       <TaskItem
         key={task.id}
@@ -41,12 +41,12 @@ export const TaskList: React.FC<TaskListType> = ({ filter, todolistId }) => {
         taskStatus={task.status}
         todolistId={todolistId}
         entityStatusTask={task.entityStatusTask}
-        updateStatusCheckbox={updateStatusCheckbox}
-        handlerRemoveTask={handlerRemoveTask}
-        onChangeValueTextSpan={onChangeValueTextSpan}
+        updateStatusCheckbox={setNewStatusCheckbox}
+        handlerRemoveTask={removeCurrentTask}
+        setNewTaskName={setNewTaskName}
       />
     );
   });
 
-  return <>{tasksItemLayer}</>;
+  return <>{tasksItemLayout}</>;
 };

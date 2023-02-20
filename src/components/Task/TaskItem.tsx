@@ -17,7 +17,7 @@ interface TaskTypeProps {
     taskID: string
   ) => void;
   handlerRemoveTask: (taskID: string) => void;
-  onChangeValueTextSpan: (newValue: string, taskID: string) => void;
+  setNewTaskName: (newValue: string, taskID: string) => void;
 }
 
 export const TaskItem: React.FC<TaskTypeProps> = ({
@@ -26,7 +26,7 @@ export const TaskItem: React.FC<TaskTypeProps> = ({
   entityStatusTask,
   updateStatusCheckbox,
   handlerRemoveTask,
-  onChangeValueTextSpan,
+  setNewTaskName,
   taskStatus,
 }) => {
   const entityStatusDisabled = entityStatusDisabledUtils(entityStatusTask);
@@ -41,9 +41,7 @@ export const TaskItem: React.FC<TaskTypeProps> = ({
         title={taskTitle}
         disabled={entityStatusDisabled}
         taskStatus={taskStatus}
-        onChangeValueTextSpan={(newValue: string) =>
-          onChangeValueTextSpan(newValue, taskID)
-        }
+        onChangeTitle={(newValue: string) => setNewTaskName(newValue, taskID)}
       />
       <Tooltip title="delete Task" placement="right">
         <IconButton
