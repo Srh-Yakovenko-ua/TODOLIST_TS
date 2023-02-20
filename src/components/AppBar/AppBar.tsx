@@ -13,6 +13,12 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { appAuthSelectors } from "../../store/appAuth/appAuth-selectors";
 import { logoutTC } from "../../store/appAuth/appAuth-reducer";
+import {
+  appBarContainer,
+  appBarIconButton,
+  appBarMenu,
+  appBarTitle,
+} from "./app-bar-style";
 
 export const MenuAppBar = () => {
   const dispatch = useAppDispatch();
@@ -26,7 +32,7 @@ export const MenuAppBar = () => {
   const logout = () => dispatch(logoutTC());
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={appBarContainer}>
       <AppBar position="static">
         <Toolbar>
           <IconButton
@@ -34,11 +40,11 @@ export const MenuAppBar = () => {
             edge="start"
             color="inherit"
             aria-label="menu"
-            sx={{ mr: 2 }}
+            sx={appBarIconButton}
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography variant="h6" component="div" sx={appBarTitle}>
             TodoList
           </Typography>
           {isAuth && (
@@ -54,7 +60,7 @@ export const MenuAppBar = () => {
                 <AccountCircle />
               </IconButton>
               <Menu
-                sx={{ mt: "40px" }}
+                sx={appBarMenu}
                 id="menu-appbar"
                 anchorEl={anchorEl}
                 anchorOrigin={{
