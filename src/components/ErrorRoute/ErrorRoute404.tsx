@@ -1,20 +1,14 @@
 import React from "react";
-import { Box, Button, Container, Typography } from "@mui/material";
-import Grid from "@mui/material/Grid";
+import { Box, Button, Container, Typography, Grid } from "@mui/material";
+
 import { useNavigate } from "react-router-dom";
+import { containerError } from "./error-route-style";
 
 export const ErrorRoute404 = () => {
   const navigate = useNavigate();
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        minHeight: "100vh",
-      }}
-    >
+    <Box sx={containerError}>
       <Container maxWidth="md">
         <Grid container spacing={2}>
           <Grid xs={6}>
