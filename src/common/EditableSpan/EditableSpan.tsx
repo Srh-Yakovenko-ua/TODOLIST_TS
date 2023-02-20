@@ -5,14 +5,14 @@ import { Span } from "./editable-span-style";
 
 type EditableSpanType = {
   title: string;
-  onChangeValueTextSpan?: (newValue: string) => void;
+  onChangeTitle?: (newValue: string) => void;
   disabled?: boolean;
   taskStatus?: number;
 };
 
 export const EditableSpan: React.FC<EditableSpanType> = ({
   title,
-  onChangeValueTextSpan,
+  onChangeTitle,
   disabled,
   taskStatus,
 }) => {
@@ -27,11 +27,11 @@ export const EditableSpan: React.FC<EditableSpanType> = ({
   };
   const onBlurEditMode = () => {
     setEditMode(!editMode);
-    onChangeValueTextSpan && onChangeValueTextSpan(newTitle);
+    onChangeTitle && onChangeTitle(newTitle);
   };
   const onKeyUpEditMode = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      onChangeValueTextSpan && onChangeValueTextSpan(newTitle);
+      onChangeTitle && onChangeTitle(newTitle);
       setEditMode(!editMode);
     }
   };
