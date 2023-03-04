@@ -1,4 +1,4 @@
-import { ACTION_TYPE_APP, RequestStatusType } from "./app-reducer";
+import { ACTION_TYPE_APP, RequestStatusType } from './app-reducer'
 
 export const setAppPreloaderStatusAC = (status: RequestStatusType) =>
   ({
@@ -6,7 +6,7 @@ export const setAppPreloaderStatusAC = (status: RequestStatusType) =>
     payload: {
       status,
     },
-  } as const);
+  } as const)
 
 export const setAppErrorAC = (error: string | null) =>
   ({
@@ -14,4 +14,4 @@ export const setAppErrorAC = (error: string | null) =>
     payload: {
       error,
     },
-  } as const);
+  } as const)

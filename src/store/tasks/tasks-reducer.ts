@@ -1,30 +1,29 @@
-import {
-  ACTION_TYPE_TASK,
-  ActionsTaskType,
-  TaskStateType,
-  UpdateDomainTaskModelType,
-  UpdateTaskModelType,
-} from "./tasks-types";
-import { taskAPI } from "../../api/task-api";
+import axios, { AxiosError } from 'axios'
+
+import { taskAPI } from '../../api/task-api'
+import { RESPONSE_RESULT_CODE_SUCCESS } from '../../utils/constants/constanst'
+import { handleServerAppError, handleServerNetworkError } from '../../utils/error-utils'
+import { setAppPreloaderStatusAC } from '../app/app-actions'
+import { RootThunkType } from '../index'
+import { changeTodoEntityStatusAC } from '../todolist/todolist-action'
+import { ACTION_TYPE_TODOLIST } from '../todolist/todolist-types'
+
 import {
   changeTaskEntityStatusAC,
   createNewTaskAC,
   getTasksAC,
   removeTaskAC,
   updateTaskAC,
-} from "./tasks-action";
-import { RootThunkType } from "../index";
-import { ACTION_TYPE_TODOLIST } from "../todolist/todolist-types";
-import { setAppPreloaderStatusAC } from "../app/app-actions";
+} from './tasks-action'
 import {
-  handleServerAppError,
-  handleServerNetworkError,
-} from "../../utils/error-utils";
-import { changeTodoEntityStatusAC } from "../todolist/todolist-action";
-import axios, { AxiosError } from "axios";
-import { RESPONSE_RESULT_CODE_SUCCESS } from "../../utils/constants/constanst";
+  ACTION_TYPE_TASK,
+  ActionsTaskType,
+  TaskStateType,
+  UpdateDomainTaskModelType,
+  UpdateTaskModelType,
+} from './tasks-types'
 
-const initialState: TaskStateType = {};
+const initialState: TaskStateType = {}
 
 export const tasksReducer = (
   state: TaskStateType = initialState,
@@ -35,123 +34,120 @@ export const tasksReducer = (
       return {
         ...state,
         [action.payload.item.id]: [],
-      };
+      }
     case ACTION_TYPE_TASK.GET_TASKS:
       return {
         ...state,
-        [action.payload.todolistId]: action.payload.items.map((el) => ({
+        [action.payload.todolistId]: action.payload.items.map(el => ({
           ...el,
-          entityStatusTask: "idle",
+          entityStatusTask: 'idle',
         })),
-      };
+      }
     case ACTION_TYPE_TASK.CREATE_NEW_TASK:
       return {
         ...state,
         [action.item.todoListId]: [
           ...state[action.item.todoListId],
-          { ...action.item, entityStatusTask: "idle" },
+          { ...action.item, entityStatusTask: 'idle' },
         ],
-      };
+      }
     case ACTION_TYPE_TASK.REMOVE_TASK:
       return {
         ...state,
         [action.payload.todoID]: state[action.payload.todoID].filter(
-          (el) => el.id !== action.payload.taskID
+          el => el.id !== action.payload.taskID
         ),
-      };
+      }
     case ACTION_TYPE_TASK.UPDATE_TASK:
       return {
         ...state,
-        [action.payload.todoID]: state[action.payload.todoID].map((el) =>
-          el.id === action.payload.taskID
-            ? { ...el, ...action.payload.apiModel }
-            : el
+        [action.payload.todoID]: state[action.payload.todoID].map(el =>
+          el.id === action.payload.taskID ? { ...el, ...action.payload.apiModel } : el
         ),
-      };
+      }
     case ACTION_TYPE_TASK.CHANGE_TASK_ENTITY_STATUS:
       return {
         ...state,
-        [action.payload.todoID]: state[action.payload.todoID].map((el) =>
+        [action.payload.todoID]: state[action.payload.todoID].map(el =>
           el.id === action.payload.taskID
             ? { ...el, entityStatusTask: action.payload.entityStatus }
             : el
         ),
-      };
+      }
     default:
-      return state;
+      return state
   }
-};
+}
 
 export const getTasksTC =
   (todolistId: string): RootThunkType =>
-  async (dispatch) => {
-    dispatch(setAppPreloaderStatusAC("loading"));
+  async dispatch => {
+    dispatch(setAppPreloaderStatusAC('loading'))
     try {
-      const { data } = await taskAPI.getTasks(todolistId);
-      dispatch(getTasksAC(data.items, todolistId));
-      dispatch(setAppPreloaderStatusAC("succeeded"));
+      const { data } = await taskAPI.getTasks(todolistId)
+
+      dispatch(getTasksAC(data.items, todolistId))
+      dispatch(setAppPreloaderStatusAC('succeeded'))
     } catch (e) {
-      console.error(e);
-      dispatch(setAppPreloaderStatusAC("failed"));
+      console.error(e)
+      dispatch(setAppPreloaderStatusAC('failed'))
     }
-  };
+  }
 
 export const createNewTaskTC =
   (title: string, todolistId: string): RootThunkType =>
-  async (dispatch) => {
-    dispatch(setAppPreloaderStatusAC("loading"));
-    dispatch(changeTodoEntityStatusAC(todolistId, "loading"));
+  async dispatch => {
+    dispatch(setAppPreloaderStatusAC('loading'))
+    dispatch(changeTodoEntityStatusAC(todolistId, 'loading'))
 
     try {
-      const { data } = await taskAPI.createNewTask(title, todolistId);
+      const { data } = await taskAPI.createNewTask(title, todolistId)
+
       if (data.resultCode === RESPONSE_RESULT_CODE_SUCCESS) {
-        dispatch(createNewTaskAC(data.data.item));
-        dispatch(setAppPreloaderStatusAC("succeeded"));
-        dispatch(changeTodoEntityStatusAC(todolistId, "succeeded"));
+        dispatch(createNewTaskAC(data.data.item))
+        dispatch(setAppPreloaderStatusAC('succeeded'))
+        dispatch(changeTodoEntityStatusAC(todolistId, 'succeeded'))
       } else {
-        handleServerAppError(data, dispatch);
-        dispatch(changeTodoEntityStatusAC(todolistId, "failed"));
+        handleServerAppError(data, dispatch)
+        dispatch(changeTodoEntityStatusAC(todolistId, 'failed'))
       }
     } catch (error) {
       if (axios.isAxiosError<AxiosError<{ message: string }>>(error)) {
-        handleServerNetworkError(error, dispatch);
-        dispatch(changeTodoEntityStatusAC(todolistId, "failed"));
+        handleServerNetworkError(error, dispatch)
+        dispatch(changeTodoEntityStatusAC(todolistId, 'failed'))
       }
     }
-  };
+  }
 
 export const removeTaskTC =
   (taskID: string, todoID: string): RootThunkType =>
-  async (dispatch) => {
-    dispatch(setAppPreloaderStatusAC("loading"));
-    dispatch(changeTaskEntityStatusAC(todoID, taskID, "loading"));
+  async dispatch => {
+    dispatch(setAppPreloaderStatusAC('loading'))
+    dispatch(changeTaskEntityStatusAC(todoID, taskID, 'loading'))
 
     try {
-      const { data } = await taskAPI.removeTask(todoID, taskID);
+      const { data } = await taskAPI.removeTask(todoID, taskID)
+
       if (data.resultCode === RESPONSE_RESULT_CODE_SUCCESS) {
-        dispatch(removeTaskAC(taskID, todoID));
-        dispatch(setAppPreloaderStatusAC("succeeded"));
+        dispatch(removeTaskAC(taskID, todoID))
+        dispatch(setAppPreloaderStatusAC('succeeded'))
       } else {
-        handleServerAppError(data, dispatch);
-        dispatch(changeTaskEntityStatusAC(todoID, taskID, "failed"));
+        handleServerAppError(data, dispatch)
+        dispatch(changeTaskEntityStatusAC(todoID, taskID, 'failed'))
       }
     } catch (error) {
       if (axios.isAxiosError<AxiosError<{ message: string }>>(error)) {
-        handleServerNetworkError(error, dispatch);
-        dispatch(changeTaskEntityStatusAC(todoID, taskID, "failed"));
+        handleServerNetworkError(error, dispatch)
+        dispatch(changeTaskEntityStatusAC(todoID, taskID, 'failed'))
       }
     }
-  };
+  }
 
 export const updateTaskTC =
-  (
-    todoID: string,
-    taskID: string,
-    domainModel: UpdateDomainTaskModelType
-  ): RootThunkType =>
+  (todoID: string, taskID: string, domainModel: UpdateDomainTaskModelType): RootThunkType =>
   async (dispatch, getState) => {
-    const task = getState().tasks[todoID];
-    const currentlyTask = task.find((el) => el.id === taskID);
+    const task = getState().tasks[todoID]
+    const currentlyTask = task.find(el => el.id === taskID)
 
     if (currentlyTask) {
       const apiModel: UpdateTaskModelType = {
@@ -163,25 +159,26 @@ export const updateTaskTC =
         priority: currentlyTask.priority,
         startDate: currentlyTask.startDate,
         ...domainModel,
-      };
+      }
 
-      dispatch(setAppPreloaderStatusAC("loading"));
-      dispatch(changeTaskEntityStatusAC(todoID, taskID, "loading"));
+      dispatch(setAppPreloaderStatusAC('loading'))
+      dispatch(changeTaskEntityStatusAC(todoID, taskID, 'loading'))
       try {
-        const { data } = await taskAPI.updateTask(todoID, taskID, apiModel);
+        const { data } = await taskAPI.updateTask(todoID, taskID, apiModel)
+
         if (data.resultCode === RESPONSE_RESULT_CODE_SUCCESS) {
-          dispatch(updateTaskAC(todoID, taskID, apiModel));
-          dispatch(setAppPreloaderStatusAC("succeeded"));
-          dispatch(changeTaskEntityStatusAC(todoID, taskID, "succeeded"));
+          dispatch(updateTaskAC(todoID, taskID, apiModel))
+          dispatch(setAppPreloaderStatusAC('succeeded'))
+          dispatch(changeTaskEntityStatusAC(todoID, taskID, 'succeeded'))
         } else {
-          handleServerAppError(data, dispatch);
-          dispatch(changeTaskEntityStatusAC(todoID, taskID, "failed"));
+          handleServerAppError(data, dispatch)
+          dispatch(changeTaskEntityStatusAC(todoID, taskID, 'failed'))
         }
       } catch (error) {
         if (axios.isAxiosError<AxiosError<{ message: string }>>(error)) {
-          handleServerNetworkError(error, dispatch);
-          dispatch(changeTaskEntityStatusAC(todoID, taskID, "failed"));
+          handleServerNetworkError(error, dispatch)
+          dispatch(changeTaskEntityStatusAC(todoID, taskID, 'failed'))
         }
       }
     }
-  };
+  }

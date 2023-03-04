@@ -1,11 +1,12 @@
-import React from "react";
-import { Box, Button, Container, Typography, Grid } from "@mui/material";
+import React from 'react'
 
-import { useNavigate } from "react-router-dom";
-import { containerError } from "./error-route-style";
+import { Box, Button, Container, Typography, Grid } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
+
+import { containerError } from './error-route-style'
 
 export const ErrorRoute404 = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   return (
     <Box sx={containerError}>
@@ -13,10 +14,8 @@ export const ErrorRoute404 = () => {
         <Grid container spacing={2}>
           <Grid xs={6}>
             <Typography variant="h1">404</Typography>
-            <Typography variant="h6">
-              The page you’re looking for doesn’t exist.
-            </Typography>
-            <Button variant="contained" onClick={() => navigate(-1)}>
+            <Typography variant="h6">The page you’re looking for doesn’t exist.</Typography>
+            <Button variant="contained" onClick={() => navigate('/')}>
               Back Home
             </Button>
           </Grid>
@@ -31,5 +30,5 @@ export const ErrorRoute404 = () => {
         </Grid>
       </Container>
     </Box>
-  );
-};
+  )
+}

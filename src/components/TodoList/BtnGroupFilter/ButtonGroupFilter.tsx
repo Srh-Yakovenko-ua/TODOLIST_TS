@@ -1,23 +1,23 @@
-import React from "react";
-import { Button } from "@mui/material";
-import { FiltersType } from "../../../store/todolist/todolist-types";
-import { additionalBtnStyles, ButtonContainer } from "./btn-group-filter-style";
+import React from 'react'
+
+import { Button } from '@mui/material'
+
+import { FiltersType } from '../../../store/todolist/todolist-types'
+
+import { additionalBtnStyles, ButtonContainer } from './btn-group-filter-style'
 
 interface ButtonFilterType {
-  filter: FiltersType;
-  filterTodo: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  filter: FiltersType
+  filterTodo: (e: React.MouseEvent<HTMLButtonElement>) => void
 }
 
-export const ButtonGroupFilter: React.FC<ButtonFilterType> = ({
-  filter,
-  filterTodo,
-}) => {
+export const ButtonGroupFilter: React.FC<ButtonFilterType> = ({ filter, filterTodo }) => {
   return (
     <ButtonContainer>
       <Button
         data-filter="all"
         sx={additionalBtnStyles}
-        variant={filter === "all" ? "contained" : "outlined"}
+        variant={filter === 'all' ? 'contained' : 'outlined'}
         color="primary"
         onClick={filterTodo}
       >
@@ -26,7 +26,7 @@ export const ButtonGroupFilter: React.FC<ButtonFilterType> = ({
       <Button
         data-filter="active"
         sx={additionalBtnStyles}
-        variant={filter === "active" ? "contained" : "outlined"}
+        variant={filter === 'active' ? 'contained' : 'outlined'}
         color="primary"
         onClick={filterTodo}
       >
@@ -35,12 +35,12 @@ export const ButtonGroupFilter: React.FC<ButtonFilterType> = ({
       <Button
         data-filter="completed"
         sx={additionalBtnStyles}
-        variant={filter === "completed" ? "contained" : "outlined"}
+        variant={filter === 'completed' ? 'contained' : 'outlined'}
         color="primary"
         onClick={filterTodo}
       >
         completed
       </Button>
     </ButtonContainer>
-  );
-};
+  )
+}

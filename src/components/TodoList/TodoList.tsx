@@ -1,35 +1,35 @@
-import React, { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../store";
-import { allTodoSelectors } from "../../store/todolist/todolist-selectors";
-import Grid from "@mui/material/Unstable_Grid2";
-import { Container, Paper } from "@mui/material";
-import {TodoItem} from "./TodoItem";
-import { AddItemForm } from "../../common/AddItemForm";
-import {
-  createNewTodoTC,
-  getTodoListsTC,
-} from "../../store/todolist/todolist-reducer";
-import { appAuthSelectors } from "../../store/appAuth/appAuth-selectors";
-import { Navigate } from "react-router-dom";
+import React, { useEffect } from 'react'
+
+import { Container, Paper } from '@mui/material'
+import Grid from '@mui/material/Unstable_Grid2'
+import { Navigate } from 'react-router-dom'
+
+import { AddItemForm } from '../../common/AddItemForm/AddItemForm'
+import { useAppDispatch, useAppSelector } from '../../store'
+import { appAuthSelectors } from '../../store/appAuth/appAuth-selectors'
+import { createNewTodoTC, getTodoListsTC } from '../../store/todolist/todolist-reducer'
+import { allTodoSelectors } from '../../store/todolist/todolist-selectors'
+
+import { TodoItem } from './TodoItem'
 
 export const TodoList = () => {
-  const dispatch = useAppDispatch();
-  const todo = useAppSelector(allTodoSelectors);
-  const isAuth = useAppSelector(appAuthSelectors);
+  const dispatch = useAppDispatch()
+  const todo = useAppSelector(allTodoSelectors)
+  const isAuth = useAppSelector(appAuthSelectors)
 
-  const createNewTodo = (title: string) => dispatch(createNewTodoTC(title));
+  const createNewTodo = (title: string) => dispatch(createNewTodoTC(title))
 
   useEffect(() => {
-    if (!isAuth) return;
-    dispatch(getTodoListsTC());
-  }, [dispatch, isAuth]);
+    if (!isAuth) return
+    dispatch(getTodoListsTC())
+  }, [dispatch, isAuth])
 
-  if (!isAuth) return <Navigate to={"/login"} />;
+  if (!isAuth) return <Navigate to={'/login'} />
 
-  const todoItemLayer = todo.map((todo) => {
+  const todoItemLayout = todo.map(todo => {
     return (
       <Grid key={todo.id}>
-        <Paper style={{ padding: "15px" }} elevation={4}>
+        <Paper style={{ padding: '15px' }} elevation={4}>
           <TodoItem
             key={todo.id}
             todolistId={todo.id}
@@ -39,23 +39,19 @@ export const TodoList = () => {
           />
         </Paper>
       </Grid>
-    );
-  });
+    )
+  })
 
   return (
     <div>
       <Container fixed>
-        <Grid container style={{ padding: "15px" }}>
-          <AddItemForm
-            addItem={createNewTodo}
-            label="create new Todo"
-            title="add Todo"
-          />
+        <Grid container style={{ padding: '15px' }}>
+          <AddItemForm addItem={createNewTodo} label="create new Todo" title="add Todo" />
         </Grid>
         <Grid container spacing={3}>
-          {todoItemLayer}
+          {todoItemLayout}
         </Grid>
       </Container>
     </div>
-  );
-};
+  )
+}

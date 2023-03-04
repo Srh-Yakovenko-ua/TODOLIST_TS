@@ -1,5 +1,6 @@
-import React from "react";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import React from 'react'
+
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import {
   Container,
   Typography,
@@ -10,20 +11,16 @@ import {
   CssBaseline,
   Button,
   Avatar,
-} from "@mui/material";
+} from '@mui/material'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
 
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useAuthLoginForm } from "./useAuthLoginForm";
-import {
-  authButton,
-  authContainer,
-  authSingInAvatar,
-} from "./auth-login-form.style";
+import { authButton, authContainer, authSingInAvatar } from './auth-login-form.style'
+import { useAuthLoginForm } from './useAuthLoginForm'
 
-const theme = createTheme();
+const theme = createTheme()
 
 export const AuthLoginForm = () => {
-  const { errors, touched, handleSubmit, getFieldProps } = useAuthLoginForm();
+  const { errors, touched, handleSubmit, getFieldProps } = useAuthLoginForm()
 
   return (
     <ThemeProvider theme={theme}>
@@ -44,7 +41,7 @@ export const AuthLoginForm = () => {
               label="Email Address"
               error={touched.email && !!errors.email}
               helperText={touched.email && errors.email}
-              {...getFieldProps("email")}
+              {...getFieldProps('email')}
               fullWidth
             />
             <TextField
@@ -53,14 +50,14 @@ export const AuthLoginForm = () => {
               margin="normal"
               label="Password"
               error={touched.password && !!errors.password}
-              {...getFieldProps("password")}
+              {...getFieldProps('password')}
               helperText={touched.password && errors.password}
               fullWidth
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
-              {...getFieldProps("rememberMe")}
+              {...getFieldProps('rememberMe')}
             />
             <Button type="submit" fullWidth variant="contained" sx={authButton}>
               Sign In
@@ -69,5 +66,5 @@ export const AuthLoginForm = () => {
         </Box>
       </Container>
     </ThemeProvider>
-  );
-};
+  )
+}

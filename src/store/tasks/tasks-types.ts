@@ -1,15 +1,16 @@
+import { AppActionType, RequestStatusType } from '../app/app-reducer'
+import { createTodoAC } from '../todolist/todolist-action'
+
 import {
   changeTaskEntityStatusAC,
   createNewTaskAC,
   getTasksAC,
   removeTaskAC,
   updateTaskAC,
-} from "./tasks-action";
-import { createTodoAC } from "../todolist/todolist-action";
-import { AppActionType, RequestStatusType } from "../app/app-reducer";
+} from './tasks-action'
 
 export interface TaskStateType {
-  [key: string]: TasksType[];
+  [key: string]: TasksType[]
 }
 
 export type ActionsTaskType =
@@ -19,49 +20,49 @@ export type ActionsTaskType =
   | ReturnType<typeof removeTaskAC>
   | ReturnType<typeof updateTaskAC>
   | ReturnType<typeof changeTaskEntityStatusAC>
-  | AppActionType;
+  | AppActionType
 
 export enum ACTION_TYPE_TASK {
-  GET_TASKS = "@@task/GET_TASKS",
-  CREATE_NEW_TASK = "@@task/CREATE_NEW_TASK",
-  REMOVE_TASK = "@@task/REMOVE_TASK",
-  UPDATE_TASK = "@@task/ UPDATE_TASK",
-  CHANGE_TASK_ENTITY_STATUS = "@@task/CHANGE_TASK_ENTITY_STATUS",
+  GET_TASKS = '@@task/GET_TASKS',
+  CREATE_NEW_TASK = '@@task/CREATE_NEW_TASK',
+  REMOVE_TASK = '@@task/REMOVE_TASK',
+  UPDATE_TASK = '@@task/ UPDATE_TASK',
+  CHANGE_TASK_ENTITY_STATUS = '@@task/CHANGE_TASK_ENTITY_STATUS',
 }
 
 export interface UpdateDomainTaskModelType {
-  title?: string;
-  description?: string;
-  completed?: boolean;
-  status?: TaskStatuses;
-  priority?: TaskPriorities;
-  startDate?: string;
-  deadline?: string;
+  title?: string
+  description?: string
+  completed?: boolean
+  status?: TaskStatuses
+  priority?: TaskPriorities
+  startDate?: string
+  deadline?: string
 }
 
 export interface UpdateTaskModelType {
-  title: string;
-  description: string;
-  completed: boolean;
-  status: TaskStatuses;
-  priority: TaskPriorities;
-  startDate: string;
-  deadline: string;
+  title: string
+  description: string
+  completed: boolean
+  status: TaskStatuses
+  priority: TaskPriorities
+  startDate: string
+  deadline: string
 }
 
 export interface TasksType {
-  description: string;
-  title: string;
-  completed: boolean;
-  status: TaskStatuses;
-  priority: TaskPriorities;
-  startDate: string;
-  deadline: string;
-  id: string;
-  todoListId: string;
-  order: number;
-  addedDate: string;
-  entityStatusTask: RequestStatusType;
+  description: string
+  title: string
+  completed: boolean
+  status: TaskStatuses
+  priority: TaskPriorities
+  startDate: string
+  deadline: string
+  id: string
+  todoListId: string
+  order: number
+  addedDate: string
+  entityStatusTask: RequestStatusType
 }
 
 export enum TaskStatuses {

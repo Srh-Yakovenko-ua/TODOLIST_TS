@@ -1,9 +1,6 @@
-import {
-  ACTION_TYPE_TODOLIST,
-  FiltersType,
-  TodoStateType,
-} from "./todolist-types";
-import { RequestStatusType } from "../app/app-reducer";
+import { RequestStatusType } from '../app/app-reducer'
+
+import { ACTION_TYPE_TODOLIST, FiltersType, TodoStateType } from './todolist-types'
 
 export const getTodoAC = (data: TodoStateType[]) => {
   return {
@@ -11,8 +8,8 @@ export const getTodoAC = (data: TodoStateType[]) => {
     payload: {
       data,
     },
-  } as const;
-};
+  } as const
+}
 
 export const removeTodoAC = (todoID: string) => {
   return {
@@ -20,8 +17,8 @@ export const removeTodoAC = (todoID: string) => {
     payload: {
       todoID,
     },
-  } as const;
-};
+  } as const
+}
 
 export const createTodoAC = (item: TodoStateType) => {
   return {
@@ -29,8 +26,8 @@ export const createTodoAC = (item: TodoStateType) => {
     payload: {
       item,
     },
-  } as const;
-};
+  } as const
+}
 export const updateTodoTitleAC = (todoID: string, newTodoTitle: string) => {
   return {
     type: ACTION_TYPE_TODOLIST.UPDATE_TODO_TITLE,
@@ -38,20 +35,17 @@ export const updateTodoTitleAC = (todoID: string, newTodoTitle: string) => {
       todoID,
       newTodoTitle,
     },
-  } as const;
-};
-export const changeTodoEntityStatusAC = (
-  todoID: string,
-  entityStatus: RequestStatusType
-) => {
+  } as const
+}
+export const changeTodoEntityStatusAC = (todoID: string, entityStatus: RequestStatusType) => {
   return {
     type: ACTION_TYPE_TODOLIST.CHANGE_TODO_ENTITY_STATUS,
     payload: {
       todoID,
       entityStatus,
     },
-  } as const;
-};
+  } as const
+}
 
 export const changeFilterTodoAC = (filter: FiltersType, todoID: string) => {
   return {
@@ -60,5 +54,5 @@ export const changeFilterTodoAC = (filter: FiltersType, todoID: string) => {
       filter,
       todoID,
     },
-  } as const;
-};
+  } as const
+}

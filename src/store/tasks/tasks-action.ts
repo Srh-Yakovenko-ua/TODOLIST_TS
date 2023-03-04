@@ -1,9 +1,6 @@
-import {
-  ACTION_TYPE_TASK,
-  TasksType,
-  UpdateTaskModelType,
-} from "./tasks-types";
-import { RequestStatusType } from "../app/app-reducer";
+import { RequestStatusType } from '../app/app-reducer'
+
+import { ACTION_TYPE_TASK, TasksType, UpdateTaskModelType } from './tasks-types'
 
 export const getTasksAC = (items: TasksType[], todolistId: string) => {
   return {
@@ -12,14 +9,14 @@ export const getTasksAC = (items: TasksType[], todolistId: string) => {
       items,
       todolistId,
     },
-  } as const;
-};
+  } as const
+}
 export const createNewTaskAC = (item: TasksType) => {
   return {
     type: ACTION_TYPE_TASK.CREATE_NEW_TASK,
     item,
-  } as const;
-};
+  } as const
+}
 
 export const removeTaskAC = (taskID: string, todoID: string) => {
   return {
@@ -28,14 +25,10 @@ export const removeTaskAC = (taskID: string, todoID: string) => {
       taskID,
       todoID,
     },
-  } as const;
-};
+  } as const
+}
 
-export const updateTaskAC = (
-  todoID: string,
-  taskID: string,
-  apiModel: UpdateTaskModelType
-) => {
+export const updateTaskAC = (todoID: string, taskID: string, apiModel: UpdateTaskModelType) => {
   return {
     type: ACTION_TYPE_TASK.UPDATE_TASK,
     payload: {
@@ -43,8 +36,8 @@ export const updateTaskAC = (
       taskID,
       apiModel,
     },
-  } as const;
-};
+  } as const
+}
 
 export const changeTaskEntityStatusAC = (
   todoID: string,
@@ -58,5 +51,5 @@ export const changeTaskEntityStatusAC = (
       taskID,
       entityStatus,
     },
-  } as const;
-};
+  } as const
+}

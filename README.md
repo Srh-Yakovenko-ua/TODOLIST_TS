@@ -1,4 +1,5 @@
 # TODOLIST APP
+
 TodoList APP
 
 ## Technology stack
@@ -12,7 +13,3 @@ TodoList APP
 - react-router-dom
 - formik
 - Material UI
-
-
-
-

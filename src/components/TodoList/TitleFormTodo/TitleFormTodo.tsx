@@ -1,17 +1,20 @@
-import React from "react";
-import { EditableSpan } from "../../../common/EditableSpan/EditableSpan";
-import { IconButton, Tooltip } from "@mui/material";
-import { red } from "@mui/material/colors";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import { RequestStatusType } from "../../../store/app/app-reducer";
-import { TitleFormContainer } from "./title-form-style";
-import { entityStatusDisabledUtils } from "../../../utils/entity-status-disabled-utils";
+import React from 'react'
+
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
+import { IconButton, Tooltip } from '@mui/material'
+import { red } from '@mui/material/colors'
+
+import { EditableSpan } from '../../../common/EditableSpan/EditableSpan'
+import { RequestStatusType } from '../../../store/app/app-reducer'
+import { entityStatusDisabledUtils } from '../../../utils/entity-status-disabled-utils'
+
+import { TitleFormContainer } from './title-form-style'
 
 interface TitleFormNameTodoType {
-  title: string;
-  entityTodoStatus: RequestStatusType;
-  onChangeTodoTitle: (newValue: string) => void;
-  removeTodo: () => void;
+  title: string
+  entityTodoStatus: RequestStatusType
+  onChangeTodoTitle: (newValue: string) => void
+  removeTodo: () => void
 }
 
 export const TitleFormTodo: React.FC<TitleFormNameTodoType> = ({
@@ -25,7 +28,7 @@ export const TitleFormTodo: React.FC<TitleFormNameTodoType> = ({
       <EditableSpan
         title={title}
         disabled={entityStatusDisabledUtils(entityTodoStatus)}
-        onChangeValueTextSpan={onChangeTodoTitle}
+        onChangeTitle={onChangeTodoTitle}
       />
       <Tooltip title="delete TODO" placement="top">
         <IconButton
@@ -37,5 +40,5 @@ export const TitleFormTodo: React.FC<TitleFormNameTodoType> = ({
         </IconButton>
       </Tooltip>
     </TitleFormContainer>
-  );
-};
+  )
+}

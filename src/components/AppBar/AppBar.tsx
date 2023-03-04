@@ -1,35 +1,25 @@
-import * as React from "react";
-import {
-  AppBar,
-  Box,
-  Toolbar,
-  Typography,
-  IconButton,
-  MenuItem,
-  Menu,
-} from "@mui/material";
-import { AccountCircle } from "@mui/icons-material";
-import MenuIcon from "@mui/icons-material/Menu";
-import { useAppDispatch, useAppSelector } from "../../store";
-import { appAuthSelectors } from "../../store/appAuth/appAuth-selectors";
-import { logoutTC } from "../../store/appAuth/appAuth-reducer";
-import {
-  appBarContainer,
-  appBarIconButton,
-  appBarMenu,
-  appBarTitle,
-} from "./app-bar-style";
+import * as React from 'react'
+
+import { AccountCircle } from '@mui/icons-material'
+import MenuIcon from '@mui/icons-material/Menu'
+import { AppBar, Box, Toolbar, Typography, IconButton, MenuItem, Menu } from '@mui/material'
+
+import { useAppDispatch, useAppSelector } from '../../store'
+import { logoutTC } from '../../store/appAuth/appAuth-reducer'
+import { appAuthSelectors } from '../../store/appAuth/appAuth-selectors'
+
+import { appBarContainer, appBarIconButton, appBarMenu, appBarTitle } from './app-bar-style'
 
 export const MenuAppBar = () => {
-  const dispatch = useAppDispatch();
-  const isAuth = useAppSelector(appAuthSelectors);
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const dispatch = useAppDispatch()
+  const isAuth = useAppSelector(appAuthSelectors)
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => setAnchorEl(null);
-  const logout = () => dispatch(logoutTC());
+    setAnchorEl(event.currentTarget)
+  }
+  const handleClose = () => setAnchorEl(null)
+  const logout = () => dispatch(logoutTC())
 
   return (
     <Box sx={appBarContainer}>
@@ -64,13 +54,13 @@ export const MenuAppBar = () => {
                 id="menu-appbar"
                 anchorEl={anchorEl}
                 anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
+                  vertical: 'top',
+                  horizontal: 'right',
                 }}
                 keepMounted
                 transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
+                  vertical: 'top',
+                  horizontal: 'right',
                 }}
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
@@ -82,5 +72,5 @@ export const MenuAppBar = () => {
         </Toolbar>
       </AppBar>
     </Box>
-  );
-};
+  )
+}
