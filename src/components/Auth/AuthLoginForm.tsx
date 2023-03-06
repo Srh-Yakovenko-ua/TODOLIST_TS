@@ -27,6 +27,12 @@ export const AuthLoginForm = () => {
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box sx={authContainer}>
+          <pre>
+            Test account credentials:
+            <br />
+            Email: free@samuraijs.com <br />
+            Password: free
+          </pre>
           <Avatar sx={authSingInAvatar}>
             <LockOutlinedIcon />
           </Avatar>
