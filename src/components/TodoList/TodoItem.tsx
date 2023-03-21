@@ -38,6 +38,7 @@ export const TodoItem: React.FC<TodoListType> = ({
   entityTodoStatus,
 }) => {
   const dispatch = useAppDispatch()
+  const entityStatusDisabled = entityStatusDisabledUtils(entityTodoStatus)
 
   const addTask = (title: string) => dispatch(createNewTaskTC(title, todolistId))
   const onChangeTodoTitle = (title: string) => dispatch(updateTodoTitleTC(todolistId, title))
@@ -58,7 +59,7 @@ export const TodoItem: React.FC<TodoListType> = ({
         removeTodo={removeTodo}
       />
       <AddItemFormWrapper>
-        <AddItemForm addItem={addTask} disabled={entityStatusDisabledUtils(entityTodoStatus)} />
+        <AddItemForm addItem={addTask} disabled={entityStatusDisabled} />
       </AddItemFormWrapper>
       <TaskList filter={filter} todolistId={todolistId} />
       <ButtonGroupFilter filter={filter} filterTodo={filterTodo} />
