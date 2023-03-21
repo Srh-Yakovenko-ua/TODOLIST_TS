@@ -2,10 +2,10 @@ import axios, { AxiosError } from 'axios'
 
 import { authApi } from '../../api/auth-api'
 import { FormDataValuesType } from '../../components/Auth/useAuthLoginForm'
-import { RESPONSE_RESULT_CODE_SUCCESS } from '../../utils/constants/constanst'
-import { handleServerAppError, handleServerNetworkError } from '../../utils/error-utils'
 import { setAppPreloaderStatusAC } from '../app/app-actions'
-import { RootThunkType } from '../index'
+import { RootThunkType } from '../store'
+
+import { RESPONSE_RESULT_CODE_SUCCESS, handleServerAppError, handleServerNetworkError } from 'utils'
 
 export enum ACTION_APP_AUTH {
   SET_AUTHORIZED_APP = '@@auth/SET_AUTHORIZED_APP',

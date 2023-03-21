@@ -3,15 +3,13 @@ import * as React from 'react'
 import { Stack, Snackbar, AlertProps } from '@mui/material'
 import MuiAlert from '@mui/material/Alert'
 
-import { useAppDispatch, useAppSelector } from '../../store'
-import { setAppErrorAC } from '../../store/app/app-actions'
-import { appErrorSelectors } from '../../store/app/app-selectors'
+import { useAppDispatch, useAppSelector, setAppErrorAC, appErrorSelectors } from 'store'
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
 })
 
-export default function CustomizedSnackbars() {
+export function CustomizedSnackbars() {
   const dispatch = useAppDispatch()
   const error = useAppSelector(appErrorSelectors)
 

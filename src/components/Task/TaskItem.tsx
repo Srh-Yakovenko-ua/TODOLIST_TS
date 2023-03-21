@@ -3,10 +3,9 @@ import React, { ChangeEvent } from 'react'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import { Checkbox, IconButton, Tooltip } from '@mui/material'
 
-import { EditableSpan } from '../../common/EditableSpan/EditableSpan'
-import { RequestStatusType } from '../../store/app/app-reducer'
-import { TaskStatuses } from '../../store/tasks/tasks-types'
-import { entityStatusDisabledUtils } from '../../utils/entity-status-disabled-utils'
+import { EditableSpan } from 'common'
+import { RequestStatusType, TaskStatuses } from 'store'
+import { entityStatusDisabledUtils } from 'utils'
 
 interface TaskTypeProps {
   todolistId: string

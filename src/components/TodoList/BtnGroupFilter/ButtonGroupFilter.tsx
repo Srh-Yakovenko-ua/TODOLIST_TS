@@ -2,9 +2,9 @@ import React from 'react'
 
 import { Button } from '@mui/material'
 
-import { FiltersType } from '../../../store/todolist/todolist-types'
-
 import { additionalBtnStyles, ButtonContainer } from './btn-group-filter-style'
+
+import { FiltersType } from 'store'
 
 interface ButtonFilterType {
   filter: FiltersType

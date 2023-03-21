@@ -1,10 +1,8 @@
 import axios, { AxiosError } from 'axios'
 
 import { taskAPI } from '../../api/task-api'
-import { RESPONSE_RESULT_CODE_SUCCESS } from '../../utils/constants/constanst'
-import { handleServerAppError, handleServerNetworkError } from '../../utils/error-utils'
 import { setAppPreloaderStatusAC } from '../app/app-actions'
-import { RootThunkType } from '../index'
+import { RootThunkType } from '../store'
 import { changeTodoEntityStatusAC } from '../todolist/todolist-action'
 import { ACTION_TYPE_TODOLIST } from '../todolist/todolist-types'
 
@@ -22,6 +20,8 @@ import {
   UpdateDomainTaskModelType,
   UpdateTaskModelType,
 } from './tasks-types'
+
+import { RESPONSE_RESULT_CODE_SUCCESS, handleServerAppError, handleServerNetworkError } from 'utils'
 
 const initialState: TaskStateType = {}
 

@@ -1,4 +1,4 @@
-import { RequestStatusType } from '../store/app/app-reducer'
+import { RequestStatusType } from 'store'
 
 export const entityStatusDisabledUtils = (
   entityStatusTask: RequestStatusType

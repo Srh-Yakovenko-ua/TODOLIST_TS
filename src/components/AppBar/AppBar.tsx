@@ -4,11 +4,9 @@ import { AccountCircle } from '@mui/icons-material'
 import MenuIcon from '@mui/icons-material/Menu'
 import { AppBar, Box, Toolbar, Typography, IconButton, MenuItem, Menu } from '@mui/material'
 
-import { useAppDispatch, useAppSelector } from '../../store'
-import { logoutTC } from '../../store/appAuth/appAuth-reducer'
-import { appAuthSelectors } from '../../store/appAuth/appAuth-selectors'
-
 import { appBarContainer, appBarIconButton, appBarMenu, appBarTitle } from './app-bar-style'
+
+import { appAuthSelectors, useAppDispatch, useAppSelector, logoutTC } from 'store'
 
 export const MenuAppBar = () => {
   const dispatch = useAppDispatch()

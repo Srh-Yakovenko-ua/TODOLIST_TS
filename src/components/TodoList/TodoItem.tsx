@@ -2,18 +2,22 @@ import React from 'react'
 
 import styled from 'styled-components'
 
-import { AddItemForm } from '../../common/AddItemForm/AddItemForm'
-import { useAppDispatch } from '../../store'
-import { RequestStatusType } from '../../store/app/app-reducer'
-import { createNewTaskTC } from '../../store/tasks/tasks-reducer'
-import { changeFilterTodoAC } from '../../store/todolist/todolist-action'
-import { removeTodoTC, updateTodoTitleTC } from '../../store/todolist/todolist-reducer'
-import { FiltersType } from '../../store/todolist/todolist-types'
-import { entityStatusDisabledUtils } from '../../utils/entity-status-disabled-utils'
 import { TaskList } from '../Task/TaskList'
 
 import { ButtonGroupFilter } from './BtnGroupFilter/ButtonGroupFilter'
 import { TitleFormTodo } from './TitleFormTodo/TitleFormTodo'
+
+import { AddItemForm } from 'common'
+import {
+  RequestStatusType,
+  useAppDispatch,
+  createNewTaskTC,
+  changeFilterTodoAC,
+  removeTodoTC,
+  updateTodoTitleTC,
+  FiltersType,
+} from 'store'
+import { entityStatusDisabledUtils } from 'utils'
 
 type TodoListType = {
   todolistId: string

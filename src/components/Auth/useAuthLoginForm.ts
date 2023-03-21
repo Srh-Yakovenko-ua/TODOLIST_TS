@@ -1,8 +1,7 @@
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 
-import { useAppDispatch } from '../../store'
-import { authLoginTC } from '../../store/appAuth/appAuth-reducer'
+import { useAppDispatch, authLoginTC } from 'store'
 
 export interface FormDataValuesType {
   email: string

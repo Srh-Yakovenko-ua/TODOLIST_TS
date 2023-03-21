@@ -1,12 +1,17 @@
 import React, { ChangeEvent } from 'react'
 
-import { useAppDispatch, useAppSelector } from '../../store'
-import { removeTaskTC, updateTaskTC } from '../../store/tasks/tasks-reducer'
-import { filterSelector } from '../../store/tasks/tasks-selectors'
-import { TaskStatuses, TasksType } from '../../store/tasks/tasks-types'
-import { FiltersType } from '../../store/todolist/todolist-types'
-
 import { TaskItem } from './TaskItem'
+
+import {
+  useAppDispatch,
+  useAppSelector,
+  removeTaskTC,
+  updateTaskTC,
+  filterSelector,
+  TaskStatuses,
+  TasksType,
+  FiltersType,
+} from 'store'
 
 interface TaskListType {
   filter: FiltersType

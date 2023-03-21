@@ -4,13 +4,17 @@ import { Container, Paper } from '@mui/material'
 import Grid from '@mui/material/Unstable_Grid2'
 import { Navigate } from 'react-router-dom'
 
-import { AddItemForm } from '../../common/AddItemForm/AddItemForm'
-import { useAppDispatch, useAppSelector } from '../../store'
-import { appAuthSelectors } from '../../store/appAuth/appAuth-selectors'
-import { createNewTodoTC, getTodoListsTC } from '../../store/todolist/todolist-reducer'
-import { allTodoSelectors } from '../../store/todolist/todolist-selectors'
-
 import { TodoItem } from './TodoItem'
+
+import { AddItemForm } from 'common'
+import {
+  appAuthSelectors,
+  useAppDispatch,
+  useAppSelector,
+  createNewTodoTC,
+  getTodoListsTC,
+  allTodoSelectors,
+} from 'store'
 
 export const TodoList = () => {
   const dispatch = useAppDispatch()
@@ -23,8 +27,6 @@ export const TodoList = () => {
     if (!isAuth) return
     dispatch(getTodoListsTC())
   }, [dispatch, isAuth])
-
-  if (!isAuth) return <Navigate to={'/login'} />
 
   const todoItemLayout = todo.map(todo => {
     return (
@@ -41,6 +43,8 @@ export const TodoList = () => {
       </Grid>
     )
   })
+
+  if (!isAuth) return <Navigate to={'/login'} />
 
   return (
     <div>

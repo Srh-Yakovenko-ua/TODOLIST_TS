@@ -1,22 +1,23 @@
-import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
-import { AnyAction, applyMiddleware, legacy_createStore } from 'redux'
-import thunk, { ThunkAction, ThunkDispatch } from 'redux-thunk'
+export { useAppDispatch, useAppSelector } from './store'
 
-import { AppActionType } from './app/app-reducer'
-import { ActionAppAuth } from './appAuth/appAuth-reducer'
-import { rootReducer, RootReducerType } from './root-reducer'
-import { ActionsTaskType } from './tasks/tasks-types'
-import { ActionsTodolistType } from './todolist/todolist-types'
+export { appStatusSelectors, appErrorSelectors } from './app/app-selectors'
+export { setAppErrorAC } from './app/app-actions'
+export type { RequestStatusType } from './app/app-reducer'
 
-export const store = legacy_createStore(rootReducer, applyMiddleware(thunk))
+export {
+  createNewTodoTC,
+  getTodoListsTC,
+  removeTodoTC,
+  updateTodoTitleTC,
+} from './todolist/todolist-reducer'
+export type { FiltersType } from './todolist/todolist-types'
+export { changeFilterTodoAC } from './todolist/todolist-action'
+export { allTodoSelectors } from './todolist/todolist-selectors'
 
-export type RootActions = ActionsTodolistType | ActionsTaskType | ActionAppAuth | AppActionType
-export type RootThunkType<ReturnType = void> = ThunkAction<
-  ReturnType,
-  RootReducerType,
-  unknown,
-  RootActions
->
+export { createNewTaskTC, removeTaskTC, updateTaskTC } from './tasks/tasks-reducer'
+export { filterSelector } from './tasks/tasks-selectors'
+export type { TasksType } from './tasks/tasks-types'
+export { TaskStatuses } from './tasks/tasks-types'
 
-export const useAppDispatch: () => ThunkDispatch<RootReducerType, any, AnyAction> = useDispatch
-export const useAppSelector: TypedUseSelectorHook<RootReducerType> = useSelector
+export { authMeTC, logoutTC, authLoginTC } from './appAuth/appAuth-reducer'
+export { isAppAuthInitializedSelectors, appAuthSelectors } from './appAuth/appAuth-selectors'

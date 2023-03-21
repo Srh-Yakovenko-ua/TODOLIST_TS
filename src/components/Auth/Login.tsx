@@ -2,10 +2,9 @@ import React from 'react'
 
 import { Navigate } from 'react-router-dom'
 
-import { useAppSelector } from '../../store'
-import { appAuthSelectors } from '../../store/appAuth/appAuth-selectors'
-
 import { AuthLoginForm } from './AuthLoginForm'
+
+import { appAuthSelectors, useAppSelector } from 'store'
 
 export const Login = () => {
   const isAuth = useAppSelector(appAuthSelectors)
