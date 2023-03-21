@@ -20,3 +20,6 @@ export type RootThunkType<ReturnType = void> = ThunkAction<
 
 export const useAppDispatch: () => ThunkDispatch<RootReducerType, any, AnyAction> = useDispatch
 export const useAppSelector: TypedUseSelectorHook<RootReducerType> = useSelector
+
+//@ts-ignore
+window.store = store
