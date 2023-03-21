@@ -20,8 +20,9 @@ export const EditableSpan: React.FC<EditableSpanType> = ({
 }) => {
   const [newTitle, setNewTitle] = useState<string>(title)
   const [editMode, setEditMode] = useState<boolean>(false)
+  const [error, setError] = useState('')
 
-  const onDoubleClickEditMode = () => setEditMode(!editMode)
+  const onClickEditMode = () => setEditMode(!editMode)
 
   const onChangeValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const newValue = e.currentTarget.value
@@ -29,13 +30,26 @@ export const EditableSpan: React.FC<EditableSpanType> = ({
     setNewTitle(newValue)
   }
   const onBlurEditMode = () => {
+    if (!newTitle.length) {
+      setError('can not be empty')
+
+      return
+    }
+
     setEditMode(!editMode)
     onChangeTitle && onChangeTitle(newTitle)
+    setError('')
   }
   const onKeyUpEditMode = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
+      if (!newTitle.length) {
+        setError('can not be empty')
+
+        return
+      }
       onChangeTitle && onChangeTitle(newTitle)
       setEditMode(!editMode)
+      setError('')
     }
   }
 
@@ -43,8 +57,8 @@ export const EditableSpan: React.FC<EditableSpanType> = ({
     <>
       {!editMode && (
         <>
-          <Tooltip title={disabled ? '' : 'double click for edit'} placement="top">
-            <IconButton disabled={disabled} color="primary" onDoubleClick={onDoubleClickEditMode}>
+          <Tooltip title="click for edit" placement="top" arrow>
+            <IconButton disabled={disabled} color="primary" onClick={onClickEditMode}>
               <ModeEditIcon />
             </IconButton>
           </Tooltip>
@@ -60,7 +74,9 @@ export const EditableSpan: React.FC<EditableSpanType> = ({
           onKeyUp={onKeyUpEditMode}
           autoFocus
           variant="standard"
-          label={`previous task name : ${title}`}
+          label={`previous name: ${title}`}
+          helperText={error}
+          error={!!error}
         />
       )}
     </>

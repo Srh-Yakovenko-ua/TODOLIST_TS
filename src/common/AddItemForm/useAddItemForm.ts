@@ -19,6 +19,7 @@ export const useAddItemForm = (addItem: (title: string) => void) => {
 
     if (e.key === 'Enter') addItemHandler()
   }
+
   const addItemHandler = () => {
     if (value?.trim()?.length > 100) return
 
@@ -26,7 +27,7 @@ export const useAddItemForm = (addItem: (title: string) => void) => {
       addItem(value)
       setValue('')
       setError('')
-    } else setError('empty field add task')
+    } else setError('empty field')
   }
 
   return { value, error, onChangeHandlerValue, onKeyUpHandler, addItemHandler }
