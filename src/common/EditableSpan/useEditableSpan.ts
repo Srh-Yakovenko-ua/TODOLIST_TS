@@ -1,11 +1,11 @@
 import { ChangeEvent, KeyboardEvent, useState } from 'react'
 
 type PropsType = {
-  title: string
+  title?: string
   onChangeTitle?: (newValue: string) => void
 }
 
-export const useEditableSpan = ({ title, onChangeTitle }: PropsType) => {
+export const useEditableSpan = ({ title = '', onChangeTitle }: PropsType) => {
   const [newTitle, setNewTitle] = useState(title)
   const [editMode, setEditMode] = useState(false)
   const [error, setError] = useState('')
@@ -15,12 +15,22 @@ export const useEditableSpan = ({ title, onChangeTitle }: PropsType) => {
   const onChangeValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const newValue = e.currentTarget.value
 
-    setNewTitle(newValue)
+    if (newValue?.trim()?.length > 99) {
+      setError('must be less than 100 characters')
+    } else {
+      setError('')
+      setNewTitle(newValue)
+    }
   }
 
   const onBlurEditMode = () => {
-    if (!newTitle.length) {
+    if (!newTitle?.trim().length) {
       setError('can not be empty')
+
+      return
+    }
+    if (newTitle?.trim().length > 99) {
+      setError('cannot be more than 100 characters')
 
       return
     }
@@ -32,7 +42,7 @@ export const useEditableSpan = ({ title, onChangeTitle }: PropsType) => {
 
   const onKeyUpEditMode = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      if (!newTitle.length) {
+      if (!newTitle.trim().length) {
         setError('can not be empty')
 
         return
