@@ -4,6 +4,7 @@ import { Container, Paper } from '@mui/material'
 import Grid from '@mui/material/Unstable_Grid2'
 import { Navigate } from 'react-router-dom'
 
+import { todoItemContainer, todoListContainer } from './todo-style'
 import { TodoItem } from './TodoItem'
 
 import { AddItemForm } from 'common'
@@ -31,7 +32,7 @@ export const TodoList = () => {
   const todoItemLayout = todo.map(todo => {
     return (
       <Grid key={todo.id}>
-        <Paper style={{ padding: '15px' }} elevation={4}>
+        <Paper sx={todoItemContainer} elevation={4}>
           <TodoItem
             key={todo.id}
             todolistId={todo.id}
@@ -49,7 +50,7 @@ export const TodoList = () => {
   return (
     <div>
       <Container fixed>
-        <Grid container style={{ padding: '15px' }}>
+        <Grid container sx={todoListContainer}>
           <AddItemForm addItem={createNewTodo} label="create new Todo" title="add Todo" />
         </Grid>
         <Grid container spacing={3}>

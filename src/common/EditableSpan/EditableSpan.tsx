@@ -1,9 +1,10 @@
 import React from 'react'
 
-import ModeEditIcon from '@mui/icons-material/ModeEdit'
-import { IconButton, TextField, Tooltip } from '@mui/material'
+import { TextField, Tooltip, Typography } from '@mui/material'
 
-import { Span } from './editable-span-style'
+import { TaskStatuses } from '../../store'
+
+import { text } from './editable-span-style'
 import { useEditableSpan } from './useEditableSpan'
 
 type EditableSpanType = {
@@ -11,6 +12,7 @@ type EditableSpanType = {
   onChangeTitle?: (newValue: string) => void
   disabled?: boolean
   taskStatus?: number
+  fontWeight?: string
 }
 
 export const EditableSpan: React.FC<EditableSpanType> = ({
@@ -18,6 +20,7 @@ export const EditableSpan: React.FC<EditableSpanType> = ({
   onChangeTitle,
   disabled,
   taskStatus,
+  fontWeight = '',
 }) => {
   const {
     onClickEditMode,
@@ -31,16 +34,6 @@ export const EditableSpan: React.FC<EditableSpanType> = ({
 
   return (
     <>
-      {!editMode && (
-        <>
-          <Tooltip title={disabled ? '' : 'click for edit'} placement="top" arrow>
-            <IconButton disabled={disabled} color="primary" onClick={onClickEditMode}>
-              <ModeEditIcon />
-            </IconButton>
-          </Tooltip>
-          <Span taskStatusProps={taskStatus}>{newTitle}</Span>
-        </>
-      )}
       {editMode && (
         <TextField
           type="text"
@@ -53,7 +46,28 @@ export const EditableSpan: React.FC<EditableSpanType> = ({
           label={`previous name: ${title}`}
           helperText={error}
           error={!!error}
+          disabled={disabled}
+          multiline
         />
+      )}
+
+      {!editMode && (
+        <>
+          <Tooltip title="click to edit" arrow placement="top">
+            <Typography
+              component="p"
+              onClick={onClickEditMode}
+              sx={{
+                ...text,
+                textDecoration: taskStatus === TaskStatuses.Completed ? 'line-through' : '',
+                opacity: taskStatus === TaskStatuses.Completed ? 0.5 : '',
+                fontWeight: fontWeight ? 'bold' : '400',
+              }}
+            >
+              {newTitle}
+            </Typography>
+          </Tooltip>
+        </>
       )}
     </>
   )

@@ -1,7 +1,9 @@
 import React, { ChangeEvent } from 'react'
 
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
-import { Checkbox, IconButton, Tooltip } from '@mui/material'
+import { Box, Checkbox, IconButton, Tooltip } from '@mui/material'
+
+import { checkbox, removeBtn, taskItemContainer } from './task-style'
 
 import { EditableSpan } from 'common'
 import { RequestStatusType, TaskStatuses } from 'store'
@@ -30,27 +32,31 @@ export const TaskItem: React.FC<TaskTypeProps> = ({
   const entityStatusDisabled = entityStatusDisabledUtils(entityStatusTask)
 
   return (
-    <div>
+    <Box sx={taskItemContainer}>
       <Checkbox
         disabled={entityStatusDisabled}
         checked={taskStatus === TaskStatuses.Completed}
         onChange={e => updateStatusCheckbox(e, taskID)}
+        sx={checkbox}
       />
+
       <EditableSpan
         title={taskTitle}
         disabled={entityStatusDisabled}
         taskStatus={taskStatus}
         onChangeTitle={(newValue: string) => setNewTaskName(newValue, taskID)}
       />
+
       <Tooltip title="delete Task" placement="right">
         <IconButton
           disabled={entityStatusDisabled}
           onClick={() => handlerRemoveTask(taskID)}
           color="primary"
+          sx={removeBtn}
         >
           <DeleteForeverIcon />
         </IconButton>
       </Tooltip>
-    </div>
+    </Box>
   )
 }

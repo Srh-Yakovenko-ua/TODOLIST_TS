@@ -1,21 +1,20 @@
 import React from 'react'
 
-import styled from 'styled-components'
-
 import { TaskList } from '../Task/TaskList'
 
 import { ButtonGroupFilter } from './BtnGroupFilter/ButtonGroupFilter'
 import { TitleFormTodo } from './TitleFormTodo/TitleFormTodo'
+import { AddItemFormWrapper } from './todo-style'
 
 import { AddItemForm } from 'common'
 import {
-  RequestStatusType,
-  useAppDispatch,
-  createNewTaskTC,
   changeFilterTodoAC,
-  removeTodoTC,
-  updateTodoTitleTC,
+  createNewTaskTC,
   FiltersType,
+  removeTodoTC,
+  RequestStatusType,
+  updateTodoTitleTC,
+  useAppDispatch,
 } from 'store'
 import { entityStatusDisabledUtils } from 'utils'
 
@@ -25,11 +24,6 @@ type TodoListType = {
   filter: FiltersType
   entityTodoStatus: RequestStatusType
 }
-
-const AddItemFormWrapper = styled.div`
-  display: flex;
-  gap: 30px;
-`
 
 export const TodoItem: React.FC<TodoListType> = ({
   todolistId,

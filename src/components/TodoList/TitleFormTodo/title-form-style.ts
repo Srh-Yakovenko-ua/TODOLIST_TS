@@ -1,8 +1,3 @@
-import styled from 'styled-components'
+import { red } from '@mui/material/colors'
 
-export const TitleFormContainer = styled.div`
-  display: flex;
-  align-items: center;
-  font-weight: 600;
-  font-size: 1.5em;
-`
+export const deleteBtn = { color: red[400], position: 'absolute', top: '10px', right: '10px' }

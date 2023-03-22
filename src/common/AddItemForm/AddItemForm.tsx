@@ -1,7 +1,7 @@
 import React from 'react'
 
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd'
-import { IconButton, TextField, Tooltip } from '@mui/material'
+import { Box, IconButton, TextField, Tooltip } from '@mui/material'
 
 import { useAddItemForm } from './useAddItemForm'
 
@@ -17,7 +17,7 @@ export const AddItemForm: React.FC<AddFormTodoList> = ({ addItem, label, title, 
     useAddItemForm(addItem)
 
   return (
-    <>
+    <Box>
       <TextField
         type="text"
         label={!label ? 'create a new task' : label}
@@ -28,6 +28,7 @@ export const AddItemForm: React.FC<AddFormTodoList> = ({ addItem, label, title, 
         onChange={onChangeHandlerValue}
         onKeyUp={onKeyUpHandler}
         disabled={disabled}
+        multiline
       />
 
       <Tooltip title={!title ? 'add Task' : title} placement="right">
@@ -35,6 +36,6 @@ export const AddItemForm: React.FC<AddFormTodoList> = ({ addItem, label, title, 
           <LibraryAddIcon />
         </IconButton>
       </Tooltip>
-    </>
+    </Box>
   )
 }

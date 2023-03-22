@@ -3,14 +3,14 @@ import React, { ChangeEvent } from 'react'
 import { TaskItem } from './TaskItem'
 
 import {
-  useAppDispatch,
-  useAppSelector,
-  removeTaskTC,
-  updateTaskTC,
   filterSelector,
+  FiltersType,
+  removeTaskTC,
   TaskStatuses,
   TasksType,
-  FiltersType,
+  updateTaskTC,
+  useAppDispatch,
+  useAppSelector,
 } from 'store'
 
 interface TaskListType {
